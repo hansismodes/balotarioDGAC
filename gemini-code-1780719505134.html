@@ -1,0 +1,2040 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Balotario DGAC • PP Avión</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Suppress Tailwind CDN warning (only for local/development use) -->
+    <script>
+        (function() {
+            const originalWarn = console.warn;
+            console.warn = function(msg, ...args) {
+                if (typeof msg === 'string' && msg.includes('cdn.tailwindcss.com')) {
+                    return; // Suppress the production warning
+                }
+                originalWarn.apply(console, [msg, ...args]);
+            };
+        })();
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;600&amp;display=swap');
+        
+        :root {
+            --garmin-bg: #0A0F1C;
+            --garmin-panel: #141B2D;
+            --garmin-card: #1A2338;
+            --garmin-green: #00D26A;
+            --garmin-green-dark: #00A854;
+            --garmin-text: #E2E8F0;
+            --garmin-text-muted: #94A3B8;
+        }
+        
+        body {
+            font-family: 'Inter', system_ui, sans-serif;
+        }
+        
+        .font-display {
+            font-family: 'Space Grotesk', 'Inter', sans-serif;
+            font-weight: 600;
+        }
+
+        .garmin-bg {
+            background-color: var(--garmin-bg);
+        }
+        
+        .garmin-panel {
+            background-color: var(--garmin-panel);
+        }
+
+        .garmin-card {
+            background-color: var(--garmin-card);
+            border: 1px solid #2D3748;
+        }
+
+        .section-header {
+            font-size: 13px;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+            color: #64748B;
+        }
+
+        .topic-btn {
+            transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .topic-btn:hover {
+            background-color: #1E2937;
+            transform: translateX(2px);
+        }
+        
+        .topic-btn.active {
+            background-color: #1E2937;
+            border-left: 3px solid var(--garmin-green);
+            color: white;
+        }
+
+        .flashcard {
+            perspective: 1200px;
+            min-height: 420px;
+        }
+        
+        .flashcard-inner {
+            display: grid;                   /* <-- Cambiado a Grid para controlar el tamaño */
+            grid-template-columns: 1fr;      /* <-- Crea una sola columna */
+            grid-template-rows: 1fr;         /* <-- Crea una sola fila */
+            position: relative;
+            width: 100%;
+            transition: transform 0.5s cubic-bezier(0.23, 1.0, 0.32, 1);
+            transform-style: preserve-3d;
+            -webkit-transform-style: preserve-3d;
+        }
+        
+        .flashcard.flipped .flashcard-inner {
+            transform: rotateY(180deg);
+            -webkit-transform: rotateY(180deg);
+        }
+        
+        .flashcard-front, .flashcard-back {
+            grid-area: 1 / 1 / 2 / 2;        /* <-- Reemplaza 'position: absolute'. Apila ambas caras en la misma celda */
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 20px;
+        }
+        
+        .flashcard-back {
+            transform: rotateY(180deg);
+            -webkit-transform: rotateY(180deg);
+        }
+
+        .option-row {
+            transition: all 0.1s ease;
+        }
+        
+        .option-row:hover {
+            background-color: #252F45;
+            transform: translateX(2px);
+        }
+
+        .garmin-btn {
+            transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 600;
+            letter-spacing: -.3px;
+        }
+        
+        .garmin-btn-primary {
+            background-color: var(--garmin-green);
+            color: #0A0F1C;
+        }
+        
+        .garmin-btn-primary:hover {
+            background-color: #00E070;
+            transform: translateY(-1px);
+        }
+
+        .question-text {
+            font-size: 1.05rem;
+            line-height: 1.45;
+            font-weight: 500;
+        }
+
+        .metric {
+            font-variant-numeric: tabular-nums;
+        }
+
+        .sidebar {
+            scrollbar-width: thin;
+            scrollbar-color: #334155 #141B2D;
+        }
+
+        .dgac-header {
+            background: linear-gradient(to right, #0A0F1C, #141B2D);
+            border-bottom: 1px solid #1E2937;
+        }
+
+        .instrument-shadow {
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.4);
+        }
+    </style>
+</head>
+<body class="garmin-bg text-white">
+    <!-- Top Navigation -->
+    <nav class="sticky top-0 z-50 dgac-header">
+        <div class="max-w-screen-2xl mx-auto">
+            <div class="px-4 md:px-6 h-16 flex items-center justify-between">
+                <!-- Left: Logo + Hamburger -->
+                <div class="flex items-center gap-x-3">
+                    <!-- Hamburger (mobile) -->
+                    <button id="hamburger-btn"
+                            class="md:hidden w-10 h-10 flex items-center justify-center text-white hover:bg-white/10 rounded-2xl transition-colors"
+                            aria-label="Abrir menú">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                    
+                    <!-- Logo -->
+                    <div class="flex items-center gap-x-3">
+                        <div class="w-9 h-9 bg-emerald-500 rounded-2xl flex items-center justify-center shadow-inner">
+                            <i class="fa-solid fa-plane text-[#0A0F1C] text-2xl"></i>
+                        </div>
+                        <div>
+                            <span class="font-display text-2xl font-semibold tracking-tighter">Balotario DGAC</span>
+                            <span class="text-[10px] font-mono text-emerald-400 tracking-[1.5px] block -mt-1">DGAC</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Center: Current Topic (desktop) -->
+                <div class="hidden md:flex items-center gap-x-2 text-sm">
+                    <div class="px-3 py-1.5 bg-white/5 rounded-3xl flex items-center gap-x-2 text-sm">
+                        <i class="fa-solid fa-book text-emerald-400"></i>
+                        <span id="desktop-topic-name" class="font-medium text-white">Reglamentación</span>
+                    </div>
+                </div>
+
+                <!-- Right side -->
+                <div class="flex items-center gap-x-2">
+                    <div class="hidden sm:flex items-center text-xs px-3 py-1.5 bg-white/5 rounded-3xl text-emerald-400">
+                        <i class="fa-solid fa-graduation-cap mr-1.5"></i>
+                        <span class="font-medium">Modo Estudio</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-screen-2xl mx-auto flex">
+        
+        <!-- SIDEBAR (Desktop) -->
+        <div id="sidebar-desktop"
+             class="hidden md:flex w-72 flex-col border-r border-white/10 bg-[#0F1629] min-h-[calc(100vh-4rem)]">
+            
+            <div class="p-5">
+                <div class="section-header mb-3 px-1">TEMAS DEL BALOTARIO</div>
+                
+                <!-- Topics List -->
+                <div id="topics-list" class="space-y-1">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+            
+            <div class="mt-auto p-5 border-t border-white/10">
+                <div class="text-[10px] text-white/40 px-1">
+                    Estructura base v1.0<br>
+                    Preguntas exactas DGAC • Sin modificaciones
+                </div>
+            </div>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="flex-1 min-w-0">
+            <div class="max-w-3xl mx-auto px-4 md:px-8 pt-6 pb-12">
+                
+                <!-- Topic Header -->
+                <div class="flex items-end justify-between mb-6">
+                    <div>
+                        <div id="topic-badge" 
+                             class="inline-flex items-center gap-x-2 text-xs font-semibold tracking-wider text-emerald-400 mb-1">
+                            <i class="fa-solid fa-file-lines"></i>
+                            <span id="topic-name">REGLAMENTACIÓN - PP AVIÓN 2023</span>
+                        </div>
+                        <h1 class="text-3xl font-semibold tracking-tighter" id="topic-full-name">
+                            Reglamentación
+                        </h1>
+                        <p class="text-white/50 text-sm mt-0.5" id="topic-meta"></p>
+                    </div>
+                    
+                    <div class="hidden md:block text-right">
+                        <div class="text-xs text-white/40">PROGRESO DEL TEMA</div>
+                        <div class="flex items-baseline justify-end gap-x-1 mt-0.5">
+                            <span id="progress-text" class="font-mono text-2xl font-semibold text-white">01</span>
+                            <span class="text-white/40" id="desktop-total">/ 31</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Flashcard Container -->
+                <div class="relative">
+                    <!-- Card -->
+                    <div id="flashcard" 
+                         class="flashcard garmin-card instrument-shadow w-full max-w-[620px] mx-auto rounded-3xl overflow-hidden border border-white/10 cursor-pointer">
+                        
+                        <div id="flashcard-inner" class="flashcard-inner h-full min-h-[420px]">
+                            
+                            <!-- FRONT -->
+                            <div id="card-front" 
+                                 class="flashcard-front p-7 md:p-8 flex flex-col bg-[#1A2338]">
+                                
+                                <!-- Anexo banner (conditional) -->
+                                <div id="anexo-banner" class="hidden mb-4">
+                                    <div class="inline-flex items-center gap-x-2 bg-amber-500/10 text-amber-300 text-xs font-bold px-4 h-8 rounded-2xl">
+                                        <i class="fa-solid fa-exclamation-triangle"></i>
+                                        <span class="font-semibold">REVISAR EL ANEXO / FIGURA</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex-1">
+                                    <!-- Question code -->
+                                    <div id="question-code" 
+                                         class="font-mono text-[10px] tracking-[1px] text-emerald-400/70 mb-2"></div>
+                                    
+                                    <!-- Question text -->
+                                    <div id="question-text" 
+                                         class="question-text text-white leading-snug mb-7 pr-1">
+                                    </div>
+                                    
+                                    <!-- Options -->
+                                    <div id="options-container" class="space-y-[9px]">
+                                        <!-- Populated dynamically -->
+                                    </div>
+                                </div>
+                                
+                                <div class="pt-5 mt-auto border-t border-white/10 flex items-center justify-between text-xs">
+                                    <div class="flex items-center text-white/40">
+                                        <i class="fa-solid fa-sync-alt mr-1.5"></i>
+                                        <span>Toca o usa el botón para voltear</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- BACK -->
+                            <div id="card-back" 
+                                 class="flashcard-back p-7 md:p-8 flex flex-col items-center justify-center text-center bg-[#1A2338]">
+                                
+                                <div class="mb-3">
+                                    <div class="w-16 h-16 mx-auto rounded-2xl bg-emerald-500/10 flex items-center justify-center">
+                                        <i class="fa-solid fa-check-double text-emerald-400 text-4xl"></i>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-1">
+                                    <span class="text-emerald-400 text-sm font-semibold tracking-widest">RESPUESTA CORRECTA</span>
+                                </div>
+                                
+                                <div id="correct-letter" 
+                                     class="text-[92px] leading-none font-black text-emerald-400 tracking-[-6px] mb-1">
+                                </div>
+                                
+                                <div id="correct-text" 
+                                     class="max-w-[280px] text-lg text-white/90 leading-tight mb-8 px-4">
+                                </div>
+                                
+                                <div class="text-[10px] text-white/40">DGAC • Respuesta oficial</div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    
+                    <!-- Flip hint on mobile -->
+                    <div class="md:hidden text-center mt-3">
+                        <span class="text-xs text-white/40">Usa el botón inferior para ver la respuesta</span>
+                    </div>
+                </div>
+
+                <!-- Controls -->
+                <div class="max-w-[620px] mx-auto mt-6">
+                    <div class="flex items-center justify-between gap-3">
+                        
+                        <!-- Previous -->
+                        <button onclick="prevQuestion()"
+                                class="garmin-btn flex-1 md:flex-none px-5 h-12 flex items-center justify-center gap-x-2 rounded-2xl border border-white/20 hover:bg-white/5 active:bg-white/10 text-sm font-medium">
+                            <i class="fa-solid fa-chevron-left"></i>
+                            <span class="hidden sm:inline">Anterior</span>
+                        </button>
+                        
+                        <!-- Flip Button -->
+                        <button id="flip-btn"
+                                onclick="flipCard()"
+                                class="garmin-btn garmin-btn-primary flex-[2.5] md:flex-[2] h-14 md:h-12 flex items-center justify-center gap-x-3 rounded-2xl text-base font-semibold shadow-lg active:scale-[0.985]">
+                            <span id="flip-btn-text">GIRAR</span>
+                            <i class="fa-solid fa-sync-alt" id="flip-icon"></i>
+                        </button>
+                        
+                        <!-- Next -->
+                        <button onclick="nextQuestion()"
+                                class="garmin-btn flex-1 md:flex-none px-5 h-12 flex items-center justify-center gap-x-2 rounded-2xl border border-white/20 hover:bg-white/5 active:bg-white/10 text-sm font-medium">
+                            <span class="hidden sm:inline">Siguiente</span>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                        
+                    </div>
+                    
+                    <!-- Mobile progress -->
+                    <div class="md:hidden flex justify-center mt-4">
+                        <div class="px-4 py-1 bg-white/5 rounded-3xl text-xs font-mono text-white/60 flex items-center gap-x-1.5">
+                            <span id="mobile-progress">01</span>
+                            <span class="text-white/30">/</span>
+                            <span id="mobile-total">31</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Footer note -->
+                <div class="max-w-[620px] mx-auto mt-8 text-center">
+                    <p class="text-[10px] text-white/30">
+                        Preguntas transcritas exactamente desde documentos oficiales DGAC. 
+                        Sin resúmenes ni modificaciones.
+                    </p>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Sidebar Drawer -->
+    <div id="mobile-drawer" class="hidden fixed inset-0 z-[60] bg-black/70">
+        <div onclick="closeMobileDrawer()" class="absolute inset-0"></div>
+        
+        <div onclick="event.stopImmediatePropagation()" 
+             class="absolute left-0 top-0 bottom-0 w-72 garmin-panel border-r border-white/10 p-5 overflow-y-auto">
+            
+            <div class="flex justify-between items-center mb-6">
+                <div class="flex items-center gap-x-3">
+                    <div class="w-8 h-8 bg-emerald-500 rounded-2xl flex items-center justify-center">
+                        <i class="fa-solid fa-plane text-[#0A0F1C]"></i>
+                    </div>
+                    <span class="font-display text-xl">Balotario DGAC</span>
+                </div>
+                <button onclick="closeMobileDrawer()" class="w-9 h-9 flex items-center justify-center text-white/60 hover:text-white">
+                    <i class="fa-solid fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <div class="section-header mb-2 px-1">TEMAS</div>
+            <div id="topics-list-mobile" class="space-y-1">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function initializeTailwind() {
+            document.documentElement.style.setProperty('--accent', '#00D26A');
+        }
+        
+        const topics = [
+            { id: 'reglamentacion', name: 'Reglamentación', fullName: 'Reglamentación - PP Avión 2023', count: 31 },
+            { id: 'vuelo-ruta', name: 'Vuelo en Ruta', fullName: 'Vuelo en Ruta - PP Avión 2023', count: 77 },
+            { id: 'comunicacion', name: 'Procedimientos de Comunicación', fullName: 'Procedimientos de Comunicación - PP Avión 2023', count: 10 },
+            { id: 'meteorologia', name: 'Meteorología', fullName: 'Meteorología - PP Avión 2023', count: 18 },
+            { id: 'aeropuerto', name: 'Operaciones Aeroportuarias', fullName: 'Procedimientos y Operaciones Aeroportuarias - PP Avión 2023', count: 14 },
+            { id: 'performance', name: 'Performance', fullName: 'Performance - PP Avión 2023', count: 9 },
+            { id: 'navegacion', name: 'Navegación', fullName: 'Navegación - PP Avión 2023', count: 8 },
+            { id: 'instrumentos', name: 'Instrumentos de Vuelo', fullName: 'Instrumentos de Vuelo - PP Avión 2023', count: 11 },
+            { id: 'sistemas', name: 'Sistemas de Aeronaves', fullName: 'Sistemas de Aeronaves - PP Avión 2023', count: 7 },
+            { id: 'servicio-meteo', name: 'Servicio Meteorológico', fullName: 'Servicio Meteorológico - PP Avión 2023', count: 6 },
+            { id: 'aerodinamica', name: 'Aerodinámica Básica', fullName: 'Aerodinámica Básica - PP Avión 2023', count: 10 }
+        ];
+        
+        const topicData = {
+            'reglamentacion': {
+                questions: [
+                    {
+                        id: 1,
+                        code: 'PREG20241107015',
+                        text: '3005.- La definición de noche es:',
+                        options: {
+                            A: 'Del atardecer al amanecer.',
+                            B: '1 hora después del atardecer hasta 1 hora antes del amanecer.',
+                            C: 'El tiempo entre el final del crepúsculo civil vespertino y el comienzo del crepúsculo civil matutino.'
+                        },
+                        correct: 'C',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 2,
+                        code: 'PREG20241107015',
+                        text: '3064.- Con respecto a los privilegios y limitaciones, un piloto privado puede:',
+                        options: {
+                            A: 'Actuar como piloto al mando, pero sin remuneración.',
+                            B: 'Actuar como piloto al mando de una aeronave que lleve un pasajero a cambio de una compensación si el vuelo está relacionado con una empresa o empleo.',
+                            C: 'Se pagará por los gastos operativos de un vuelo.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 3,
+                        code: 'PREG20241107015',
+                        text: '3066.- ¿Qué excepción, si la hay, permite que un piloto privado actúe como piloto al mando de una aeronave que transporta pasajeros que pagan el vuelo?',
+                        options: {
+                            A: 'Si los pasajeros pagan todos los gastos operativos.',
+                            B: 'Si se hace una donación a una organización benéfica para el vuelo.',
+                            C: 'No hay ninguna excepción.'
+                        },
+                        correct: 'C',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 4,
+                        code: 'PREG20241107015',
+                        text: '3067.- (Consulte la Figura 74.) ¿Qué licencia mínima de piloto se requiere para un vuelo que sale de Hayward Executive (Área 6)?',
+                        options: {
+                            A: 'Licencia de Alumno Piloto.',
+                            B: 'Licencia de Piloto Privado.',
+                            C: 'Licencia de Piloto Deportivo.'
+                        },
+                        correct: 'A',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 5,
+                        code: 'PREG20241107015',
+                        text: '3001.- Con respecto a las habilitaciones en las licencias de pilotos, ¿cuáles son las categorías de aeronaves?',
+                        options: {
+                            A: 'Giroplano, helicóptero, dirigible, globo libre.',
+                            B: 'Avión, helicóptero, dirigible de un volumen superior a 4 600 metros cúbicos, aeronave de despegue vertical.',
+                            C: 'Monomotor terrestre y marítimo, multimotor terrestre y marítimo.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 6,
+                        code: 'PREG20241107015',
+                        text: '3002.- Con respecto a las habilitaciones en las licencias de pilotos, ¿cuáles son las clases de aeronaves?',
+                        options: {
+                            A: 'Avión, helicóptero, planeador, más ligero que el aire.',
+                            B: 'Monomotores terrestres, multimotores terrestres, monomotores hidroavión, multimotores hidroavión.',
+                            C: 'Más ligero que el aire, dirigible, globo aerostático, globo de gas.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 7,
+                        code: 'PREG20241107014',
+                        text: '3024.- ¿El piloto al mando debe tener una habilitación de tipo en qué aeronave?',
+                        options: {
+                            A: 'Aeronaves operadas bajo una autorización emitida por la Autoridad.',
+                            B: 'Aeronaves certificadas para volar con una tripulación mínima de dos pilotos; aviones turbopropulsados; todos los helicópteros y aeronaves de despegue vertical.',
+                            C: 'Aeronaves involucradas en vuelos de ferry, vuelos de entrenamiento o vuelos de prueba.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 8,
+                        code: 'PREG20241107015',
+                        text: '3039.- Se emitió un certificado médico de Clase 2 a un piloto privado de 19 años, el certificado médico vencerá en:',
+                        options: {
+                            A: '36 meses.',
+                            B: '12 meses.',
+                            C: '6 meses.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 9,
+                        code: 'PREG20241107016',
+                        text: '3020.- Un certificado médico Clase 2 se emite a un piloto de 36 años, el certificado médico será válido por:',
+                        options: {
+                            A: '36 meses.',
+                            B: '12 meses.',
+                            C: '6 meses.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 10,
+                        code: 'PREG20241107016',
+                        text: '3021.- Un certificado médico Clase 2 que se emite a un piloto de 51 años, será válido por:',
+                        options: {
+                            A: '36 meses.',
+                            B: '12 meses.',
+                            C: '6 meses.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 11,
+                        code: 'PREG20241107016',
+                        text: '3022.- El titular de una licencia de piloto comercial que tiene 42 años realiza operaciones de vuelo privadas, qué certificado médico y validez del mismo debe acreditar:',
+                        options: {
+                            A: 'Clase 2, 36 meses.',
+                            B: 'Clase 1, 12 meses.',
+                            C: 'Clase 2, 24 meses.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 12,
+                        code: 'PREG20241107016',
+                        text: '3023.- Para operaciones de piloto privado, un certificado médico Clase 2 emitido a un piloto de 23 años tendrá una validez de:',
+                        options: {
+                            A: '36 meses.',
+                            B: '12 meses.',
+                            C: '6 meses.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 13,
+                        code: 'PREG20241107016',
+                        text: '3016.- ¿Qué documento (s) debe (n) estar en su posesión personal o de fácil acceso en la aeronave mientras opera como piloto al mando de una aeronave?',
+                        options: {
+                            A: 'Certificados que demuestren la realización de una verificación en la aeronave y una revisión de vuelo actual.',
+                            B: 'Una licencia de piloto con un endoso que demuestre la realización de una revisión de vuelo anual y un diario de vuelo del piloto que muestre la experiencia reciente.',
+                            C: 'Una licencia de piloto apropiada y un certificado médico actual apropiado.'
+                        },
+                        correct: 'C',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 14,
+                        code: 'PREG20241107016',
+                        text: '3017.- ¿Cuándo debe estar una licencia de piloto vigente en posesión personal del piloto o fácilmente accesible en la aeronave?',
+                        options: {
+                            A: 'Cuando actúa como jefe de tripulación durante el lanzamiento y la recuperación.',
+                            B: 'Solo cuando se transportan pasajeros.',
+                            C: 'En cualquier momento cuando actúe como piloto al mando o como miembro de la tripulación requerido.'
+                        },
+                        correct: 'C',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 15,
+                        code: 'PREG20241107016',
+                        text: '3018.- Un piloto privado que actúe como piloto al mando, o en cualquier otra capacidad como piloto requerido miembro de la tripulación de vuelo, debe tener en su posesión personal o fácilmente accesible en la aeronave un:',
+                        options: {
+                            A: 'Endoso del libro de registro para demostrar que la revisión del vuelo se ha realizado satisfactoriamente.',
+                            B: 'Certificado médico y una licencia de piloto apropiada.',
+                            C: 'Endoso en el certificado de piloto para demostrar que una revisión de vuelo se ha realizado satisfactoriamente.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 16,
+                        code: 'PREG20241107016',
+                        text: '3019.- Toda persona que posea una licencia de piloto o un certificado médico deberá presentarlo para su inspección a solicitud de cualquier:',
+                        options: {
+                            A: 'Representante autorizado del Ministerio de Transporte.',
+                            B: 'Persona en una posición de autoridad.',
+                            C: 'Inspectores designados por la AAC.'
+                        },
+                        correct: 'C',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 17,
+                        code: 'PREG20241107016',
+                        text: '3028.- Para actuar como piloto al mando de una aeronave que realiza operaciones privadas, un piloto debe demostrar mediante el endoso en su libro de vuelo la finalización satisfactoria de un repaso de vuelo, dentro del periodo anterior de:',
+                        options: {
+                            A: '6 meses calendario.',
+                            B: '12 meses calendario.',
+                            C: '24 meses calendario.'
+                        },
+                        correct: 'C',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 18,
+                        code: 'PREG20241107016',
+                        text: '3029.- Si no se cumplen los requisitos de experiencia reciente para vuelos nocturnos y la puesta de sol oficial es a las 18:30, la última hora en que se pueden transportar personas es:',
+                        options: {
+                            A: '0.7701388888888889',
+                            B: '0.7909722222222222',
+                            C: '0.8118055555555556'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 19,
+                        code: 'PREG20241107017',
+                        text: '3030.- Para actuar como piloto al mando de una aeronave que transporta personas, el piloto debe haber realizado al menos tres despegues y tres aterrizajes en una aeronave de la misma categoría, clase, y si se requiere habilitación de tipo, del mismo tipo, dentro de los últimos:',
+                        options: {
+                            A: '90 días.',
+                            B: '60 días.',
+                            C: '30 días.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 20,
+                        code: 'PREG20241107017',
+                        text: '3030.1.- Tu primo quiere que lo lleves a volar. Debe haber realizado al menos tres despegues y tres aterrizajes en su aeronave dentro de los últimos:',
+                        options: {
+                            A: '90 días.',
+                            B: '60 días.',
+                            C: '30 días.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 21,
+                        code: 'PREG20241107017',
+                        text: '3031.- Para actuar como piloto al mando de una aeronave, el piloto debe haber realizado tres despegues y tres aterrizajes dentro de los 90 días anteriores en una aeronave de la misma:',
+                        options: {
+                            A: 'Marca y modelo.',
+                            B: 'Categoría y clase, pero no tipo.',
+                            C: 'Categoría, clase y tipo, si se requiere una habilitación de tipo.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 22,
+                        code: 'PREG20241107017',
+                        text: '3034.- Para cumplir con los requisitos de experiencia reciente para actuar como piloto al mando que transporta pasajeros por la noche, un piloto debe haber realizado al menos tres despegues y tres aterrizajes hasta detenerse por completo dentro de los 90 días anteriores en:',
+                        options: {
+                            A: 'La misma categoría y clase de aeronave que se utilizará.',
+                            B: 'El mismo tipo de aeronave que se utilizará.',
+                            C: 'Cualquier avión.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 23,
+                        code: 'PREG20241107017',
+                        text: '3040.- Si un piloto privado tuvo su repaso de vuelo, este año, ¿cuándo se requiere el próximo repaso de vuelo?',
+                        options: {
+                            A: '2 años después.',
+                            B: '1 año después.',
+                            C: 'No requiere repaso de vuelo.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 24,
+                        code: 'PREG20241107017',
+                        text: '3041.- Cada piloto privado requiere tener:',
+                        options: {
+                            A: 'Una revisión de vuelo bianual.',
+                            B: 'Una revisión de vuelo anual.',
+                            C: 'Una revisión de vuelo semianual.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 25,
+                        code: 'PREG20241107017',
+                        text: '3032.- Los aterrizajes necesarios para cumplir con los requisitos de experiencia reciente para transportar pasajeros en un avión de rueda de cola:',
+                        options: {
+                            A: 'Puede ser toque y listo o punto final.',
+                            B: 'Debe ser toque y listo.',
+                            C: 'Hasta la detención completa del avión en la pista.'
+                        },
+                        correct: 'C',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 26,
+                        code: 'PREG20241107017',
+                        text: '3033.- Los tres despegues y aterrizajes que se requieren para actuar como piloto al mando en la noche deben realizarse durante el período de tiempo desde:',
+                        options: {
+                            A: 'Del atardecer al amanecer.',
+                            B: '1 hora después del atardecer hasta 1 hora antes del amanecer.',
+                            C: 'Del final del crepúsculo civil vespertino al comienzo del crepúsculo civil matutino.'
+                        },
+                        correct: 'C',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 27,
+                        code: 'PREG20241107017',
+                        text: '3035.- Si un piloto certificado cambia su domicilio permanente y no notifica a la AAC sobre la nueva dirección, el piloto tiene derecho a ejercer los privilegios del certificado de piloto por un período de solo:',
+                        options: {
+                            A: '30 días después de la fecha que cambió su domicilio.',
+                            B: '60 días después de la fecha que cambió su domicilio.',
+                            C: '90 días después de la fecha que cambió su domicilio.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 28,
+                        code: 'PREG20241107017',
+                        text: '3070.- La autoridad final en cuanto a la operación de una aeronave es la de:',
+                        options: {
+                            A: 'La Autoridad Aeronáutica.',
+                            B: 'El piloto al mando.',
+                            C: 'El fabricante del avión.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 29,
+                        code: 'PREG20241107018',
+                        text: '3072.- Si una emergencia en vuelo requiere una acción inmediata, el piloto al mando puede:',
+                        options: {
+                            A: 'Desviarse de cualquier regla del LAR 91 en la medida necesaria para hacer frente a la emergencia, sin dar aviso a la autoridad.',
+                            B: 'Desviarse de cualquier regla del LAR 91 en la medida necesaria para cumplir con esa emergencia, notificando a la autoridad competente.',
+                            C: 'No se desvíe de ninguna regla del LAR 91.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 30,
+                        code: 'PREG20241107018',
+                        text: '3073.- Cuándo un piloto que se desvía de un reglamento durante una emergencia, debe enviar un informe escrito de esa desviación si lo exigen las Autoridades competentes en un plazo de:',
+                        options: {
+                            A: 'En 7 días.',
+                            B: 'En 10 días.',
+                            C: 'En 15 días.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 31,
+                        code: 'PREG20241107018',
+                        text: '3074.- ¿Quién es responsable de determinar si una aeronave está en condiciones de realizar un vuelo seguro?',
+                        options: {
+                            A: 'El piloto al mando.',
+                            B: 'El propietario o el operador.',
+                            C: 'La Autoridad Aeronáutica.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    }
+                ]
+            },
+            'vuelo-ruta': {
+                questions: [
+                    {
+                        id: 1,
+                        code: 'PREG20241107054',
+                        text: '3637.1.- ¿Cuál de los siguientes ítems es verdadero, con respecto a los colores azul y magenta que se utilizan para representar los aeropuertos en las cartas aeronáuticas seccionales?',
+                        options: {
+                            A: 'Los aeropuertos con torres de control subyacentes al espacio aéreo de Clase A, B y C se muestran en azul, el espacio aéreo de Clase D y E en magenta.',
+                            B: 'Los aeropuertos con torres de control subyacentes al espacio aéreo de Clase C, D y E se muestran en magenta.',
+                            C: 'Los aeropuertos con torres de control subyacentes al espacio aéreo de Clase B, C, D y E se muestran en azul.'
+                        },
+                        correct: 'C',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 2,
+                        code: 'PREG20241107054',
+                        text: '3637.- (Refiérase a la Figura 23, area 3.) ¿Cuál es la altura del obstáculo iluminado aproximadamente a 6 millas náuticas al suroeste de Savannah International?',
+                        options: {
+                            A: '1,500 pies MSL.',
+                            B: '1,531 pies AGL.',
+                            C: '1,548 pies MSL.'
+                        },
+                        correct: 'C',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 3,
+                        code: 'PREG20241107054',
+                        text: '3638.- (Refiérase a la Figura 23, área 3). La parte superior de la obstrucción del grupo aproximadamente a 11 millas náuticas del Savannah VORTAC en el radial 009° es:',
+                        options: {
+                            A: '400 pies AGL.',
+                            B: '454 pies MSL.',
+                            C: '432 pies MSL.'
+                        },
+                        correct: 'B',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 4,
+                        code: 'PREG20241107054',
+                        text: '3639.- (Refiérase a la Figura 24, área 1.) ¿Qué altitud mínima es necesaria para despejar verticalmente el obstáculo en el lado noreste del aeropuerto Airpark East en 500 pies?',
+                        options: {
+                            A: '1,010 pies MSL.',
+                            B: '1,273 pies MSL.',
+                            C: '1,283 pies MSL.'
+                        },
+                        correct: 'B',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 5,
+                        code: 'PREG20241107054',
+                        text: '3640.- (Refiérase a la Figura 24, área 2.) ¿Qué altitud mínima es necesaria para despejar verticalmente el obstáculo en el lado sureste del aeropuerto de Winnsboro por 500 pies?',
+                        options: {
+                            A: '823 pies MSL.',
+                            B: '1,013 pies MSL.',
+                            C: '1,403 pies MSL.'
+                        },
+                        correct: 'C',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 6,
+                        code: 'PREG20241107054',
+                        text: '3631.- (Refiérase a la Figura 20, área 5.) El cuadro de PRECAUCIÓN indica ¿qué peligro para la aeronave?',
+                        options: {
+                            A: 'Globo sin marcar en cable a 3008 pies MSL.',
+                            B: 'Globo sin marcar en cable a 3008 pies AGL.',
+                            C: 'Perchas para dirigibles sin marcar a 308 pies MSL.'
+                        },
+                        correct: 'A',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 7,
+                        code: 'PREG20241107054',
+                        text: '3632.- (Refiérase a la Figura 20, área 2). El símbolo de la bandera en el lago Drummond representa un:',
+                        options: {
+                            A: 'punto de notificación obligatorio para el espacio aéreo de clase C de Norfolk.',
+                            B: 'punto de notificación obligatorio para el aeropuerto de Hampton Roads.',
+                            C: 'punto de control visual utilizado para identificar la posición para la llamada inicial a Norfolk Approach Control.'
+                        },
+                        correct: 'C',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 8,
+                        code: 'PREG20241107054',
+                        text: '3633.- (Refiérase a la Figura 20, área 2.) La elevación del Aeropuerto Regional de Chesapeake es:',
+                        options: {
+                            A: '19 pies.',
+                            B: '55 pies.',
+                            C: '230 pies.'
+                        },
+                        correct: 'A',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 9,
+                        code: 'PREG20241107054',
+                        text: '3634.- (Refiérase a la Figura 21). La elevación del terreno del área de color tostado claro entre Minot (área 1) y Audubon Lake (área 2) varía de:',
+                        options: {
+                            A: 'nivel del mar hasta 2,000 pies MSL.',
+                            B: '2,000 pies a 2,500 pies MSL.',
+                            C: '2,000 pies a 2,700 pies MSL.'
+                        },
+                        correct: 'B',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 10,
+                        code: 'PREG20241107055',
+                        text: '3635.- (Refiérase a la Figura 21). ¿Qué aeropuertos de uso público representados tienen combustible?',
+                        options: {
+                            A: 'Internacional de Minot (área 1) y Garrison (área 2).',
+                            B: 'Internacional de Minot (área 1).',
+                            C: 'Aeropuerto Regional del Condado de Mercer (área 3).'
+                        },
+                        correct: 'B',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 11,
+                        code: 'PREG20241107055',
+                        text: '3636.- (Refiérase a la Figura 23). Los símbolos de la bandera en el aeropuerto de Statesboro Bullock, el aeropuerto de Claxton-Evans y el aeropuerto de Ridgeland son:',
+                        options: {
+                            A: 'límites exteriores del espacio aéreo Clase C de Savannah.',
+                            B: 'aeropuertos con patrones de tráfico especiales.',
+                            C: 'puntos de control visual para identificar la posición para la llamada inicial antes de ingresar al espacio aéreo Clase C de Savannah.'
+                        },
+                        correct: 'C',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 12,
+                        code: 'PREG20241107055',
+                        text: '3642.- (Refiérase a la Figura 25, área 8.) ¿Qué altitud mínima se requiere para volar sobre las torres de televisión Cedar Hill en el área congestionada al sur de Dallas Executive (RBD)?',
+                        options: {
+                            A: '2,655 pies MSL.',
+                            B: '3,549 pies MSL.',
+                            C: '3,449 pies MSL.'
+                        },
+                        correct: 'B',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 13,
+                        code: 'PREG20241107055',
+                        text: '3531.- (Refiérase a la Figura 20.) Determine el curso magnético desde el aeropuerto First Flight (área 5) hasta el aeropuerto Hampton Roads (área 2):',
+                        options: {
+                            A: '141°',
+                            B: '321°.',
+                            C: '332°.'
+                        },
+                        correct: 'C',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 14,
+                        code: 'PREG20241107055',
+                        text: '3556.- (Refiérase a la Figura 24). Determine el curso magnético desde el aeropuerto Airpark East (área 1) hasta el aeropuerto de Winnsboro (área 2). La variación magnética es de 6° 30\'E:',
+                        options: {
+                            A: '075°.',
+                            B: '082°.',
+                            C: '091°.'
+                        },
+                        correct: 'A',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 15,
+                        code: 'PREG20241107055',
+                        text: '3568.- (Refiérase a la Figura 26.) Determine el curso magnético desde el aeropuerto Tomlinson (área 1) al aeropuerto Jamestown (área 4):',
+                        options: {
+                            A: '153°',
+                            B: '154°',
+                            C: '159°.'
+                        },
+                        correct: 'A',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 16,
+                        code: 'PREG20241107055',
+                        text: '3816.- (Refiérase a la Figura 68). La línea del punto A al punto B del triángulo del viento representa:',
+                        options: {
+                            A: 'verdadero rumbo y velocidad aérea.',
+                            B: 'verdadero rumbo y velocidad terrestre.',
+                            C: 'velocidad terrestre y rumbo verdadero.'
+                        },
+                        correct: 'A',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 17,
+                        code: 'PREG20241107055',
+                        text: '3817.- (Refiérase a la Figura 68). La línea del punto C al punto B del triángulo de viento representa:',
+                        options: {
+                            A: 'velocidad aerodinámica y rumbo.',
+                            B: 'velocidad terrestre y rumbo verdadero.',
+                            C: 'verdadero rumbo y velocidad terrestre.'
+                        },
+                        correct: 'B',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 18,
+                        code: 'PREG20241107055',
+                        text: '2001.- (Refiérase a la Figura 68). La línea del punto C al punto A del triángulo de viento representa:',
+                        options: {
+                            A: 'dirección y velocidad del viento.',
+                            B: 'verdadero rumbo y velocidad terrestre.',
+                            C: 'verdadero rumbo y velocidad terrestre.'
+                        },
+                        correct: 'A',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 19,
+                        code: 'PREG20241107055',
+                        text: '3529.1.- Si un rumbo real de 135° da como resultado una trayectoria terrestre de 130° y una velocidad aerodinámica real de 135 nudos da como resultado una velocidad terrestre de 140 nudos, el viento sería de:',
+                        options: {
+                            A: '019° y 12 nudos.',
+                            B: '200° y 13 nudos.',
+                            C: '246° y 13 nudos.'
+                        },
+                        correct: 'C',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 20,
+                        code: 'PREG20241107056',
+                        text: '3529.2.- Al realizar la conversión de rumbo verdadero a rumbo magnético, el piloto debe:',
+                        options: {
+                            A: 'restar la variación hacia el este y el ángulo de corrección del viento a la derecha.',
+                            B: 'sumar la variación del oeste y reste el ángulo de corrección del viento a la izquierda.',
+                            C: 'restar la variación del oeste y agregue el ángulo de corrección del viento a la derecha.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 21,
+                        code: 'PREG20241107056',
+                        text: '3529.3.- ¿Qué distancia recorrerá un avión en 2-1/2 minutos con una velocidad respecto al suelo de 98 nudos?',
+                        options: {
+                            A: '2.45 NM.',
+                            B: '3.35 NM.',
+                            C: '4.08 NM.'
+                        },
+                        correct: 'C',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 22,
+                        code: 'PREG20241107056',
+                        text: '3529.4.- ¿Qué distancia recorrerá un avión en 7.5 minutos con una velocidad respecto al suelo de 114 nudos?',
+                        options: {
+                            A: '14.25 NM.',
+                            B: '15.00 NM.',
+                            C: '14.50 NM.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 23,
+                        code: 'PREG20241107056',
+                        text: '3565.- (Refiérase a la Figura 25). Determine el rumbo magnético para un vuelo desde Fort Worth Meacham (área 4) a Denton Muni (área 1). El viento es de 330° a 25 nudos, la velocidad real es de 110 nudos y la variación magnética es de 7º este:',
+                        options: {
+                            A: '004°',
+                            B: '017°.',
+                            C: '023°.'
+                        },
+                        correct: 'A',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 24,
+                        code: 'PREG20241107056',
+                        text: '3538.- (Refiérase a la Figura 21). Determine el rumbo magnético de un vuelo desde el aeropuerto de Mercer (área 3) a Minot International (área 1). El viento es de 330° a 25 nudos, la velocidad real es de 100 nudos y la variación magnética es de 10° este:',
+                        options: {
+                            A: '002°.',
+                            B: '012°.',
+                            C: '352°.'
+                        },
+                        correct: 'C',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 25,
+                        code: 'PREG20241107058',
+                        text: '3781.- Todas las operaciones dentro del espacio aéreo Clase C deben realizarse en:',
+                        options: {
+                            A: 'de acuerdo con las reglas de vuelo por instrumentos.',
+                            B: 'cumplimiento de las autorizaciones e instrucciones del ATC.',
+                            C: 'una aeronave equipada con un transpondedor de código 4096 con capacidad de codificación en Modo C.'
+                        },
+                        correct: 'C',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 26,
+                        code: 'PREG20241107058',
+                        text: '3782 En qué condiciones puede operar una aeronave desde un aeropuerto satélite dentro del espacio aéreo de Clase C?',
+                        options: {
+                            A: 'El piloto debe presentar un plan de vuelo antes de la salida.',
+                            B: 'El piloto debe monitorear el ATC hasta que salga del espacio aéreo Clase C.',
+                            C: 'El piloto debe comunicarse con ATC tan pronto como sea posible después del despegue.'
+                        },
+                        correct: 'C',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 27,
+                        code: 'PREG20241107058',
+                        text: '2122.- (Refiérase a la Figura 69). ¿Qué equipo mínimo se requiere para un vuelo desde el aeropuerto de Kleberg Co. (área 7) al aeropuerto Corpus Christi Intl. (área 3)?',
+                        options: {
+                            A: 'ADS-B.',
+                            B: 'Equipo de radio bidireccional.',
+                            C: 'Transpondedor de radio bidireccional y modo C con equipo de informe de altitud.'
+                        },
+                        correct: 'C',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 28,
+                        code: 'PREG20241107059',
+                        text: '3626.- (Consulte la Figura 23, área 3). ¿Cuál es el piso del espacio aéreo de Savannah Clase C en el área de la plataforma (círculo exterior)?',
+                        options: {
+                            A: '1.300 pies AGL.',
+                            B: '1,300 pies MSL.',
+                            C: '1,700 pies MSL.'
+                        },
+                        correct: 'B',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 29,
+                        code: 'PREG20241107059',
+                        text: '3627.- (Consulte la Figura 20, área 1.) ¿Qué equipo de radio mínimo se requiere para aterrizar y despegar en Norfolk International?',
+                        options: {
+                            A: 'Transpondedor y omnireceptor Modo C.',
+                            B: 'Transpondedor modo C y radio bidireccional.',
+                            C: 'Transpondedor modo C, omnireceptor y DME.'
+                        },
+                        correct: 'B',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 30,
+                        code: 'PREG20241107059',
+                        text: '3069.- Las operaciones VFR normales en el espacio aéreo de Clase D con una torre de control operativa requieren que el techo y la visibilidad sean al menos:',
+                        options: {
+                            A: '1,000 pies y 1 milla.',
+                            B: '1 500 m horizontalmente 300 m (1 000 ft) verticalmente',
+                            C: '2,500 pies y 3 millas.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 31,
+                        code: 'PREG20241107059',
+                        text: '3119.- A menos que se autorice lo contrario, se requieren comunicaciones de radio bidireccionales con la torre de control para aterrizajes o despegues:',
+                        options: {
+                            A: 'en todos los aeropuertos controlados por torres, independientemente de las condiciones meteorológicas.',
+                            B: 'en todos los aeropuertos controlados por torres solo cuando las condiciones meteorológicas son inferiores a VFR.',
+                            C: 'en todos los aeropuertos controlados por torres dentro del espacio aéreo Clase D solo cuando las condiciones climáticas son inferiores a VFR.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 32,
+                        code: 'PREG20241107059',
+                        text: '3625.- (Refiérase a la Figura 25, área 4). El espacio aéreo directamente sobre Fort Worth Meacham es:',
+                        options: {
+                            A: 'espacio aéreo Clase B hasta 10,000 pies MSL.',
+                            B: 'espacio aéreo Clase C a 5,000 pies MSL.',
+                            C: 'espacio aéreo Clase D a 3,200 pies MSL.'
+                        },
+                        correct: 'C',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 33,
+                        code: 'PREG20241107059',
+                        text: '3421.- (Refiérase a la Figura 59, área 3). El espacio aéreo directamente sobre la ciudad de Findlay es:',
+                        options: {
+                            A: 'espacio aéreo Clase E desde 700 pies AGL.',
+                            B: 'área de superficie Espacio aéreo Clase E.',
+                            C: 'espacio aéreo Clase E desde 1200 pies AGL.'
+                        },
+                        correct: 'B',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 34,
+                        code: 'PREG20241107059',
+                        text: '3068.1.- Con ciertas excepciones, el espacio aéreo de Clase E se extiende hacia arriba desde 700 pies o 1,200 pies AGL hasta, pero no incluye:',
+                        options: {
+                            A: '10,000 pies MSL.',
+                            B: '14,500 pies MSL.',
+                            C: '18,000 pies MSL.'
+                        },
+                        correct: 'C',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 35,
+                        code: 'PREG20241107059',
+                        text: '3622.- (Consulte la Figura 26, área 1.) Identifique el espacio aéreo sobre el aeropuerto Tomlinson:',
+                        options: {
+                            A: 'espacio aéreo Clase G: superficie hasta, pero sin incluir, 18,000 pies MSL.',
+                            B: 'espacio aéreo Clase G - superficie hasta, pero sin incluir, 1,200 pies AGL, espacio aéreo Clase E - 1,200 pies AGL hasta pero sin incluir 18,000 pies MSL.',
+                            C: 'espacio aéreo de clase G: superficie hasta, pero sin incluir, 700 pies MSL, espacio aéreo de clase E: 700 pies a 14,500 pies MSL.'
+                        },
+                        correct: 'B',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 36,
+                        code: 'PREG20241107059',
+                        text: '3623.- (Refiérase a la Figura 26, área 5). El espacio aéreo suprayacente y dentro de las 5 millas del aeropuerto del condado de Barnes es:',
+                        options: {
+                            A: 'espacio aéreo Clase D desde la superficie hasta el piso del espacio aéreo Clase E suprayacente.',
+                            B: 'espacio aéreo Clase E desde la superficie hasta 1,200 pies MSL.',
+                            C: 'espacio aéreo Clase G desde la superficie hasta 700 pies AGL.'
+                        },
+                        correct: 'C',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 37,
+                        code: 'PREG20241107059',
+                        text: '3624.- (Refiérase a la figura 25, área 7.) El espacio aéreo sobre Collin Co RGL McKinney (TKI) se controla desde la superficie hasta:',
+                        options: {
+                            A: '2,500 pies MSL.',
+                            B: '2,900 pies MSL.',
+                            C: '700 pies AGL.'
+                        },
+                        correct: 'B',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 38,
+                        code: 'PREG20241107060',
+                        text: '3601.-¿Qué peligros para las aeronaves pueden existir en áreas restringidas?',
+                        options: {
+                            A: 'Actividades de entrenamiento militar que requieran maniobras de vuelo acrobáticas o bruscas.',
+                            B: 'Peligros inusuales, a menudo invisibles, como artillería aérea o misiles guiados.',
+                            C: 'Alto volumen de entrenamiento de pilotos o un tipo inusual de actividad aérea.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 39,
+                        code: 'PREG20241107060',
+                        text: '3602.- (Refiérase a la Figura 26, área 2.) ¿Qué peligros para las aeronaves pueden existir en áreas como Devils Lake East MOA?',
+                        options: {
+                            A: 'Peligros inusuales, a menudo invisibles, para las aeronaves, como disparos de artillería, artillería aérea o misiles guiados.',
+                            B: 'Alto volumen de entrenamiento de pilotos o un tipo inusual de actividad aérea.',
+                            C: 'Actividades de entrenamiento militar que requieran maniobras de vuelo acrobáticas o bruscas.'
+                        },
+                        correct: 'C',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 40,
+                        code: 'PREG20241107060',
+                        text: '3783 Bajo qué condiciones, si las hay, pueden los pilotos volar a través de un área restringida?',
+                        options: {
+                            A: 'Al volar en aerovías con autorización ATC.',
+                            B: 'Con autorización de la agencia controladora.',
+                            C: 'Con el permiso del oficial de la base militar más cercana.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 41,
+                        code: 'PREG20241107060',
+                        text: '3783.1.- El vuelo a través de un área restringida no debe realizarse a menos que el piloto haya:',
+                        options: {
+                            A: 'presentado un plan de vuelo IFR.',
+                            B: 'recibido autorización previa de la agencia controladora.',
+                            C: 'recibido permiso previo del oficial al mando de la base militar más cercana.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 42,
+                        code: 'PREG20241107060',
+                        text: '3785 Qué acción debe tomar un piloto cuando opera bajo VFR en un Área de Operaciones Militares (MOA)?',
+                        options: {
+                            A: 'Obtenga una autorización de la agencia de control antes de ingresar al MOA.',
+                            B: 'Opere solo en las vías respiratorias que atraviesan el MOA.',
+                            C: 'Tenga mucho cuidado cuando se lleve a cabo una actividad militar.'
+                        },
+                        correct: 'C',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 43,
+                        code: 'PREG20241107060',
+                        text: '3786.- La responsabilidad de evitar colisiones en un área de alerta recae en:',
+                        options: {
+                            A: 'la agencia controladora.',
+                            B: 'todos los pilotos.',
+                            C: 'control de tráfico aéreo.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 44,
+                        code: 'PREG20241107060',
+                        text: '3130 En qué tipo de espacio aéreo están prohibidos los vuelos VFR?',
+                        options: {
+                            A: 'Clase A.',
+                            B: 'Clase B.',
+                            C: 'Clase C.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 45,
+                        code: 'PREG20241107052',
+                        text: '3530.1 ¿Qué afirmación sobre la longitud y la latitud es verdadera?',
+                        options: {
+                            A: 'Las líneas de longitud son paralelas al Ecuador.',
+                            B: 'Las líneas de longitud cruzan el Ecuador en ángulo recto.',
+                            C: 'Las líneas de latitud de 0° pasa por Greenwich, Inglaterra.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 46,
+                        code: 'PREG20241107053',
+                        text: '3530.- (Refiérase a la Figura 20, área 3.) Determine la latitud y longitud aproximadas del aeropuerto de Currituck County Airport:',
+                        options: {
+                            A: '36° 24\'N 76° 01\'W.',
+                            B: '36° 48\'N - 76° 01\'W.',
+                            C: '47° 24\'N - 75° 58 W.'
+                        },
+                        correct: 'A',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 47,
+                        code: 'PREG20241107053',
+                        text: '3535.- (Refiérase a la Figura 21, área (2.) ¿Qué aeropuerto está ubicado aproximadamente a 47° 35\'30" N de latitud y 100° 43\'00" W de longitud?',
+                        options: {
+                            A: 'Turtle Lake.',
+                            B: 'MAKEEFF.',
+                            C: 'Johnson.'
+                        },
+                        correct: 'B',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 48,
+                        code: 'PREG20241107053',
+                        text: '3536.- (Refiérase a la Figura 21, área 3.) ¿Qué aeropuerto está ubicado aproximadamente a 47° 21\'N de latitud y 101°01\'W de longitud?',
+                        options: {
+                            A: 'Lorentzen.',
+                            B: 'Johnson.',
+                            C: 'Washburn.'
+                        },
+                        correct: 'C',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 49,
+                        code: 'PREG20241107053',
+                        text: '3543.- (Refiérase a la Figura 22, área 3). Determine la latitud y longitud aproximadas del aeropuerto del Shoshone:',
+                        options: {
+                            A: '47° 02\'N 116° 11\'W.',
+                            B: '47° 33\'N 116° 11\'W.',
+                            C: '47° 32\'N 116° 41\'W.'
+                        },
+                        correct: 'B',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 50,
+                        code: 'PREG20241107053',
+                        text: '3567.- (Refiérase a la Figura 26, área 2.) ¿Cuál es la latitud y longitud aproximadas del aeropuerto de Cooperstown?',
+                        options: {
+                            A: '47° 25\'N - 98° 06\'W',
+                            B: '47° 25\'N - 99° 54\'W.',
+                            C: '47° 55\'N - 98° 06\'W.'
+                        },
+                        correct: 'A',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 51,
+                        code: 'PREG20241107053',
+                        text: '3571.- (Refiérase a la Figura 27). Una aeronave sale de un aeropuerto en la zona de horario de verano del este a las 0945 EDT para un vuelo de 2 horas a un aeropuerto ubicado en la zona de horario de verano central. ¿El aterrizaje debería ser en qué hora universal coordinada?',
+                        options: {
+                            A: '1345Z.',
+                            B: '1445Z.',
+                            C: '1545Z.'
+                        },
+                        correct: 'C',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 52,
+                        code: 'PREG20241107053',
+                        text: '3572.- (Refiérase a la Figura 27). Un avión sale de un aeropuerto en la zona horaria estándar central a las 0930 CST para un vuelo de 2 horas a un aeropuerto ubicado en la zona horaria estándar de la montaña (MST). ¿El aterrizaje debe ser a qué hora?',
+                        options: {
+                            A: '0930 MST.',
+                            B: '1030 MST.',
+                            C: '1130 MST.'
+                        },
+                        correct: 'B',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 53,
+                        code: 'PREG20241107053',
+                        text: '3573.- (Refiérase a la Figura 27.) Un avión sale de un aeropuerto en la zona horaria estándar central a las 0845 CST para un vuelo de 2 horas a un aeropuerto ubicado en la zona horaria estándar de la montaña. ¿El aterrizaje debería ser en qué hora universal coordinada?',
+                        options: {
+                            A: '1345Z.',
+                            B: '1445Z.',
+                            C: '1645Z.'
+                        },
+                        correct: 'C',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 54,
+                        code: 'PREG20241107053',
+                        text: '3574.- (Refiérase a la Figura 27.) Un avión sale de un aeropuerto en la zona horaria estándar de montaña a las 1615 MST para un vuelo de 2 horas y 15 minutos a un aeropuerto ubicado en la zona horaria estándar del Pacífico PST). La hora estimada de llegada al aeropuerto de destino debe ser:',
+                        options: {
+                            A: '1630 PST.',
+                            B: '1730 PST.',
+                            C: '1830 PST.'
+                        },
+                        correct: 'B',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 55,
+                        code: 'PREG20241107053',
+                        text: '3575.- (Refiérase a la Figura 27). Un avión sale de un aeropuerto en la zona horaria estándar del Pacífico a las 1030 PST para un vuelo de 4 horas a un aeropuerto ubicado en la zona horaria estándar central. ¿El aterrizaje debería ser en qué hora universal coordinada?',
+                        options: {
+                            A: '2030Z.',
+                            B: '2130Z.',
+                            C: '2230Z.'
+                        },
+                        correct: 'C',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 56,
+                        code: 'PREG20241107054',
+                        text: '3576.- (Refiérase a la Figura 27). Una aeronave sale de un aeropuerto en la zona horaria estándar de montaña a las 1515 MST para un vuelo de 2 horas y 30 minutos a un aeropuerto ubicado en la zona horaria estándar del Pacífico. ¿Cuál es la hora estimada de llegada al aeropuerto de destino?',
+                        options: {
+                            A: '1645 PST.',
+                            B: '1745 PST.',
+                            C: '1845 PST.'
+                        },
+                        correct: 'A',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 57,
+                        code: 'PREG20241107056',
+                        text: '3545.- (Refiérase a la Figura 22.) Determine el rumbo magnético para un vuelo desde el aeropuerto Sandpoint (área 1) al aeropuerto St. Maries (área 4). El viento es de 215 a 25 nudos y la velocidad aerodinámica real es de 125 nudos:',
+                        options: {
+                            A: '172°.',
+                            B: '349°.',
+                            C: '187°'
+                        },
+                        correct: 'A',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 58,
+                        code: 'PREG20241107056',
+                        text: '3546.- (Refiérase a la Figura 22.) ¿Cuál es el rumbo magnético de un vuelo desde el aeropuerto Priest River (área 1) al aeropuerto del condado de Shoshone (área 3)? El viento es de 030° a 12 nudos y la velocidad real es de 95 nudos.',
+                        options: {
+                            A: '121°.',
+                            B: '143°.',
+                            C: '136°.'
+                        },
+                        correct: 'A',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 59,
+                        code: 'PREG20241107056',
+                        text: '3547.- (Refiérase a la figura 22.) Determine el rumbo magnético de un vuelo desde el aeropuerto St. Maries (área 4) hasta el aeropuerto Priest River (área 1). El viento es de 340° a 10 nudos y la velocidad aerodinámica real es de 90 nudos:',
+                        options: {
+                            A: '345°',
+                            B: '329°',
+                            C: '327°'
+                        },
+                        correct: 'B',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 60,
+                        code: 'PREG20241107056',
+                        text: '3550.- (Refiérase a la Figura 23). Determine el rumbo magnético de un vuelo desde el aeropuerto del condado de Allendale (área 1) al aeropuerto del condado de Claxton-Evans (área 2). El viento es de 090° a 16 nudos, la velocidad real es de 90 nudos y la variación magnética es de 6 grados oeste:',
+                        options: {
+                            A: '209°',
+                            B: '230°',
+                            C: '212°.'
+                        },
+                        correct: 'A',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 61,
+                        code: 'PREG20241107057',
+                        text: '3550.1.- En un vuelo de travesía, el punto A se cruza a las 15.00 horas y el plan es llegar al punto B a las 15.30 horas. Utilice la siguiente información para determinar la velocidad aerodinámica indicada requerida para alcanzar el punto B según lo programado: Distancia entre A y B: 70 NM Pronóstico de viento: 310° a 15 kts Altitud de presión: 8.000 pies Temperatura ambiente: -10°C Rumbo verdadero: 270° La velocidad indicada requerida sería aproximadamente:',
+                        options: {
+                            A: '126 nudos.',
+                            B: '137 nudos.',
+                            C: '152 nudos.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 62,
+                        code: 'PREG20241107057',
+                        text: '3564.- (Refiérase a la Figura 25.) Determine el rumbo magnético para un vuelo desde Dallas Executive (área 3) a Fort Worth Meacham (área 4). El viento es de 030° a 10 nudos, la velocidad real es de 135 nudos y la variación magnética es de 7º este:',
+                        options: {
+                            A: '266°',
+                            B: '286°.',
+                            C: '312°.'
+                        },
+                        correct: 'B',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 63,
+                        code: 'PREG20241107057',
+                        text: '3564.1.- (Refiérase a la Figura 75.) ¿Cuál es el tiempo en ruta desde Gila Bend VORTAC hasta Buckeye VOR a lo largo de V461 a un TAS de 125 nudos y vientos pronosticados de 180 a 17 nudos?',
+                        options: {
+                            A: 'Aproximadamente 14 minutos.',
+                            B: 'Aproximadamente 15 minutos.',
+                            C: 'Aproximadamente 13 minutos.'
+                        },
+                        correct: 'C',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 64,
+                        code: 'PREG20241107057',
+                        text: '3564.2.- (Refiérase a la Figura 21). ¿Cuál es el tiempo estimado en ruta desde el Aeropuerto Regional del Condado de Mercer (área 3) hasta Minot International (área 1)? El viento es de 330° a 25 nudos y la velocidad real es de 100 nudos. Agregue 3-1/2 minutos para la salida y el ascenso:',
+                        options: {
+                            A: '47 minutos.',
+                            B: '44 minutos.',
+                            C: '52 minutos.'
+                        },
+                        correct: 'A',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 65,
+                        code: 'PREG20241107057',
+                        text: '3599.- (Refiérase a la Figura 25, área 4). El piso del espacio aéreo Clase B que cubre el Aeropuerto Hicks (T67) al norte-noroeste de Fort Worth Meacham Field es:',
+                        options: {
+                            A: 'en la superficie.',
+                            B: '3,200 pies MSL.',
+                            C: '4000 pies MSL.'
+                        },
+                        correct: 'C',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 66,
+                        code: 'PREG20241107057',
+                        text: '3600.- (Refiérase a la Figura 25, área 2). El piso del espacio aéreo Clase B en el aeropuerto de Addison es:',
+                        options: {
+                            A: 'en la superficie.',
+                            B: '3,000 pies MSL.',
+                            C: '3,100 pies MSL.'
+                        },
+                        correct: 'B',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 67,
+                        code: 'PREG202411070573126',
+                        text: '3126 Qué licencia mínima de piloto se requiere para operar dentro del espacio aéreo de Clase B?',
+                        options: {
+                            A: 'Licencia de piloto comercial.',
+                            B: 'Licencia de piloto privado o licencia de alumno piloto con las correspondientes aprobaciones del libro de vuelo.',
+                            C: 'Certificado de piloto privado con habilitación de instrumentos.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 68,
+                        code: 'PREG20241107057',
+                        text: '3127.- Qué licencia mínima de piloto se requiere para operar dentro del espacio aéreo de Clase B?',
+                        options: {
+                            A: 'Licencia de piloto privado o licencia de alumno piloto con las correspondientes aprobaciones del libro de vuelo.',
+                            B: 'Certificado de piloto recreativo.',
+                            C: 'Licencia de piloto privado con habilitación de instrumentos.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 69,
+                        code: 'PREG202411070573128',
+                        text: '3128 Qué equipo de radio mínimo se requiere para la operación VFR dentro del espacio aéreo de Clase B?',
+                        options: {
+                            A: 'Equipo de radiocomunicación bidireccional and transpondedor de código 4096.',
+                            B: 'Equipo de comunicaciones por radio bidireccional, un transpondedor de código 4096 y un altímetro codificador.',
+                            C: 'Equipo de radiocomunicación bidireccional, un transpondedor de código 4096, un altímetro codificador y un receptor VOR TACAN.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 70,
+                        code: 'PREG20241107057',
+                        text: '3628.- (Refiérase a la Figura 25.) ¿En qué aeropuertos no están autorizados los VFR especiales de ala fija?',
+                        options: {
+                            A: 'Fort Worth Meacham y Fort Worth Spinks.',
+                            B: 'Dallas-Fort Worth International y Dallas Love Field.',
+                            C: 'Addison y el ejecutivo de Dallas.'
+                        },
+                        correct: 'B',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 71,
+                        code: 'PREG202411070583117',
+                        text: '3117 Un círculo azul segmentado en un gráfico seccional muestra qué clase de espacio aéreo?',
+                        options: {
+                            A: 'Clase B.',
+                            B: 'Clase C.',
+                            C: 'Clase D.'
+                        },
+                        correct: 'C',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 72,
+                        code: 'PREG20241107058',
+                        text: '3118.- El espacio aéreo en un aeropuerto con una torre de control a tiempo parcial se clasifica como espacio aéreo de Clase D únicamente:',
+                        options: {
+                            A: 'cuando los mínimos climáticos están por debajo del VFR básico.',
+                            B: 'cuando la torre de control asociada está en funcionamiento.',
+                            C: 'cuando la estación de servicio de vuelo asociada esté en funcionamiento'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 73,
+                        code: 'PREG20241107058',
+                        text: '3787.- Las dimensiones laterales del espacio aéreo Clase D se basan en:',
+                        options: {
+                            A: 'el número de aeropuertos que se encuentran dentro del espacio aéreo de Clase D.',
+                            B: '5 millas terrestres del centro geográfico del aeropuerto principal.',
+                            C: 'los procedimientos instrumentales para los cuales se establece el espacio aéreo controlado.'
+                        },
+                        correct: 'C',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 74,
+                        code: 'PREG20241107058',
+                        text: '3787.1.- Cuando una torre de control, ubicada en un aeropuerto dentro del espacio aéreo de Clase D, deja de funcionar durante el día, ¿qué sucede con la designación del espacio aéreo?',
+                        options: {
+                            A: 'La designación del espacio aéreo normalmente no cambiará.',
+                            B: 'El espacio aéreo sigue siendo espacio aéreo de Clase D siempre que haya disponible un observador meteorológico o un sistema meteorológico automatizado.',
+                            C: 'El espacio aéreo se revierte a Clase E o una combinación de espacio aéreo de Clase E y G durante las horas que la torre no está en operación.'
+                        },
+                        correct: 'C',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 75,
+                        code: 'PREG202411070583799',
+                        text: '3799 Qué acción inicial debe tomar un piloto antes de ingresar al espacio aéreo Clase C?',
+                        options: {
+                            A: 'Póngase en contacto con el control de aproximación en la frecuencia adecuada.',
+                            B: 'Comuníquese con la torre y solicite permiso para ingresar.',
+                            C: 'Comuníquese con el FSS para recibir avisos de tráfico.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 76,
+                        code: 'PREG20241107058',
+                        text: '3779.- El límite vertical del espacio aéreo Clase C por encima del aeropuerto principal es normalmente:',
+                        options: {
+                            A: '1,200 pies AGL.',
+                            B: '3,000 pies AGL.',
+                            C: '4,000 pies AGL.'
+                        },
+                        correct: 'C',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 77,
+                        code: 'PREG20241107058',
+                        text: '3780.- El radio del área exterior procesal del espacio aéreo de Clase C es normalmente:',
+                        options: {
+                            A: '10 NM.',
+                            B: '20 NM.',
+                            C: '30 NM.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    }
+                ]
+            }
+        };
+        
+        let currentTopicId = 'reglamentacion';
+        let currentIndex = 0;
+        let isFlipped = false;
+        
+        function renderTopics() {
+            const container = document.getElementById('topics-list');
+            const mobileContainer = document.getElementById('topics-list-mobile');
+            container.innerHTML = '';
+            mobileContainer.innerHTML = '';
+            
+            topics.forEach(topic => {
+                const hasData = topicData[topic.id] && topicData[topic.id].questions.length > 0;
+                
+                const btn = document.createElement('button');
+                btn.className = `topic-btn w-full flex items-center justify-between px-4 py-[13px] rounded-2xl text-left text-sm ${currentTopicId === topic.id ? 'active' : ''}`;
+                btn.innerHTML = `
+                    <div class="flex items-center gap-x-3">
+                        <i class="fa-solid ${getTopicIcon(topic.id)} w-4 text-emerald-400/70"></i>
+                        <span class="font-medium">${topic.name}</span>
+                    </div>
+                    <div class="flex items-center gap-x-2">
+                        <span class="text-[10px] font-mono px-2 py-px rounded bg-white/5 text-white/40">${topic.count}</span>
+                        ${!hasData ? '<span class="text-[9px] text-amber-400/60">•</span>' : ''}
+                    </div>
+                `;
+                btn.onclick = () => switchTopic(topic.id);
+                container.appendChild(btn);
+                
+                const mobileBtn = btn.cloneNode(true);
+                mobileBtn.onclick = () => {
+                    switchTopic(topic.id);
+                    closeMobileDrawer();
+                };
+                mobileContainer.appendChild(mobileBtn);
+            });
+        }
+        
+        function getTopicIcon(topicId) {
+            const icons = {
+                'reglamentacion': 'fa-gavel',
+                'vuelo-ruta': 'fa-route',
+                'comunicacion': 'fa-headset',
+                'meteorologia': 'fa-cloud-sun',
+                'aeropuerto': 'fa-plane-arrival',
+                'performance': 'fa-tachometer-alt',
+                'navegacion': 'fa-compass',
+                'instrumentos': 'fa-tachometer-alt',
+                'sistemas': 'fa-cogs',
+                'servicio-meteo': 'fa-cloud',
+                'aerodinamica': 'fa-wind'
+            };
+            return icons[topicId] || 'fa-book';
+        }
+        
+        function switchTopic(topicId) {
+            currentTopicId = topicId;
+            currentIndex = 0;
+            isFlipped = false;
+            
+            document.querySelectorAll('.topic-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.includes(topics.find(t => t.id === topicId).name)) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            updateTopicHeader();
+            renderCard();
+            
+            const desktopName = document.getElementById('desktop-topic-name');
+            if (desktopName) {
+                desktopName.textContent = topics.find(t => t.id === topicId).name;
+            }
+        }
+        
+        function updateTopicHeader() {
+            const topic = topics.find(t => t.id === currentTopicId);
+            const hasData = topicData[currentTopicId] && topicData[currentTopicId].questions.length > 0;
+            
+            document.getElementById('topic-name').textContent = topic.fullName;
+            document.getElementById('topic-full-name').textContent = topic.name;
+            
+            const meta = document.getElementById('topic-meta');
+            meta.innerHTML = hasData 
+                ? `${topic.count} preguntas • Estilo flashcard oficial DGAC` 
+                : `${topic.count} preguntas • En preparación`;
+            
+            updateProgress();
+        }
+        
+        function updateProgress() {
+            const topic = topics.find(t => t.id === currentTopicId);
+            const hasData = topicData[currentTopicId] && topicData[currentTopicId].questions.length > 0;
+            const total = hasData ? topicData[currentTopicId].questions.length : topic.count;
+            
+            const progressEl = document.getElementById('progress-text');
+            const desktopTotal = document.getElementById('desktop-total');
+            const mobileProgress = document.getElementById('mobile-progress');
+            const mobileTotal = document.getElementById('mobile-total');
+            
+            if (progressEl) progressEl.textContent = String(currentIndex + 1).padStart(2, '0');
+            if (desktopTotal) desktopTotal.textContent = '/ ' + String(total).padStart(2, '0');
+            if (mobileProgress) mobileProgress.textContent = String(currentIndex + 1).padStart(2, '0');
+            if (mobileTotal) mobileTotal.textContent = '/ ' + String(total).padStart(2, '0');
+        }
+        
+        function renderCard() {
+            const card = document.getElementById('flashcard');
+            const front = document.getElementById('card-front');
+            const back = document.getElementById('card-back');
+            const anexoBanner = document.getElementById('anexo-banner');
+            
+            const data = topicData[currentTopicId];
+            const hasData = data && data.questions.length > 0;
+            
+            if (!hasData) {
+                front.innerHTML = `
+                    <div class="h-full flex flex-col items-center justify-center text-center px-6">
+                        <div class="w-16 h-16 mx-auto mb-5 rounded-3xl bg-white/5 flex items-center justify-center">
+                            <i class="fa-solid fa-clock text-3xl text-white/30"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">Contenido en preparación</h3>
+                        <p class="text-white/50 max-w-xs text-sm">Este tema se completará con las preguntas exactas de la DGAC en la siguiente iteración.</p>
+                        
+                        <div class="mt-8 text-xs px-4 py-2 bg-white/5 rounded-2xl text-white/40">
+                            Estructura lista • Esperando datos
+                        </div>
+                    </div>
+                `;
+                back.style.display = 'none';
+                
+                const flipBtn = document.getElementById('flip-btn');
+                if (flipBtn) {
+                    flipBtn.disabled = true;
+                    flipBtn.classList.add('opacity-40', 'cursor-not-allowed');
+                }
+                updateProgress();
+                return;
+            }
+            
+            back.style.display = 'flex';
+            
+            const flipBtn = document.getElementById('flip-btn');
+            if (flipBtn) {
+                flipBtn.disabled = false;
+                flipBtn.classList.remove('opacity-40', 'cursor-not-allowed');
+            }
+            
+            const q = data.questions[currentIndex];
+            
+            card.classList.remove('flipped');
+            isFlipped = false;
+            
+            const flipBtnText = document.getElementById('flip-btn-text');
+            const flipIcon = document.getElementById('flip-icon');
+            if (flipBtnText) flipBtnText.textContent = 'GIRAR';
+            if (flipIcon) flipIcon.className = 'fa-solid fa-sync-alt';
+            
+            anexoBanner.style.display = q.hasAnexo ? 'block' : 'none';
+            
+            document.getElementById('question-code').textContent = q.code || '';
+            document.getElementById('question-text').textContent = q.text;
+            
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+            
+            Object.keys(q.options).forEach(letter => {
+                const row = document.createElement('div');
+                row.className = `option-row flex items-start gap-3 p-3.5 bg-white/5 hover:bg-white/10 rounded-2xl border border-white/10`;
+                row.innerHTML = `
+                    <div class="flex-shrink-0 mt-0.5 w-[26px] h-[26px] rounded-xl bg-emerald-400/10 flex items-center justify-center">
+                        <span class="font-bold text-emerald-400 text-sm">${letter}</span>
+                    </div>
+                    <div class="text-[15px] leading-snug text-white/90 pt-0.5">${q.options[letter]}</div>
+                `;
+                optionsContainer.appendChild(row);
+            });
+            
+            document.getElementById('correct-letter').textContent = q.correct;
+            document.getElementById('correct-text').textContent = q.options[q.correct];
+            
+            updateProgress();
+        }
+        
+        function flipCard() {
+            const card = document.getElementById('flashcard');
+            const flipBtnText = document.getElementById('flip-btn-text');
+            const icon = document.getElementById('flip-icon');
+            
+            const data = topicData[currentTopicId];
+            if (!data || !data.questions.length) return;
+            
+            isFlipped = !isFlipped;
+            
+            if (isFlipped) {
+                card.classList.add('flipped');
+                if (flipBtnText) flipBtnText.textContent = 'REGRESAR';
+                if (icon) icon.className = 'fa-solid fa-undo';
+            } else {
+                card.classList.remove('flipped');
+                if (flipBtnText) flipBtnText.textContent = 'GIRAR';
+                if (icon) icon.className = 'fa-solid fa-sync-alt';
+            }
+        }
+        
+        function nextQuestion() {
+            const data = topicData[currentTopicId];
+            if (!data || !data.questions.length) return;
+            
+            if (currentIndex < data.questions.length - 1) {
+                currentIndex++;
+            } else {
+                currentIndex = 0;
+            }
+            
+            isFlipped = false;
+            renderCard();
+        }
+        
+        function prevQuestion() {
+            const data = topicData[currentTopicId];
+            if (!data || !data.questions.length) return;
+            
+            if (currentIndex > 0) {
+                currentIndex--;
+            } else {
+                currentIndex = data.questions.length - 1;
+            }
+            
+            isFlipped = false;
+            renderCard();
+        }
+        
+        function openMobileDrawer() {
+            document.getElementById('mobile-drawer').classList.remove('hidden');
+            document.getElementById('mobile-drawer').classList.add('flex');
+        }
+        
+        function closeMobileDrawer() {
+            const drawer = document.getElementById('mobile-drawer');
+            drawer.classList.remove('flex');
+            drawer.classList.add('hidden');
+        }
+        
+        function setupKeyboard() {
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowRight') {
+                    nextQuestion();
+                } else if (e.key === 'ArrowLeft') {
+                    prevQuestion();
+                } else if (e.key.toLowerCase() === 'f' || e.key === ' ') {
+                    e.preventDefault();
+                    flipCard();
+                }
+            });
+            
+            const card = document.getElementById('flashcard');
+            card.addEventListener('click', function(e) {
+                if (!e.target.closest('button')) {
+                    flipCard();
+                }
+            });
+        }
+        
+        function initialize() {
+            initializeTailwind();
+            renderTopics();
+            
+            const initialTopic = topics[0];
+            currentTopicId = initialTopic.id;
+            
+            document.getElementById('desktop-topic-name').textContent = initialTopic.name;
+            updateTopicHeader();
+            renderCard();
+            
+            document.getElementById('hamburger-btn').addEventListener('click', openMobileDrawer);
+            setupKeyboard();
+            
+            document.addEventListener('keypress', function(e) {
+                if (e.key === '?') {
+                    const card = document.getElementById('flashcard');
+                    card.style.boxShadow = '0 0 0 3px rgba(0, 210, 106, 0.3)';
+                    setTimeout(() => {
+                        card.style.boxShadow = '0 25px 50px -12px rgb(0 0 0 / 0.4)';
+                    }, 1200);
+                }
+            });
+            
+            setTimeout(() => {
+                console.log('%c[DGAC Balotarios] Estructura base cargada correctamente. Listo para agregar más preguntas.', 'color:#64748b');
+            }, 800);
+            
+            setTimeout(() => {
+                const firstBtn = document.querySelector('#topics-list .topic-btn');
+                if (firstBtn) firstBtn.classList.add('active');
+            }, 50);
+        }
+        
+        window.onload = initialize;
+        window.DGACBalotarios = { switchTopic, nextQuestion, prevQuestion, flipCard };
+    </script>
+</body>
+</html>
