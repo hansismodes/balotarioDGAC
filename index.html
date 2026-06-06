@@ -433,7 +433,7 @@
             { id: 'performance', name: 'Performance', fullName: 'Performance - PP Avión 2023', count: 00 },
             { id: 'navegacion', name: 'Navegación', fullName: 'Navegación - PP Avión 2023', count: 00 },
             { id: 'instrumentos', name: 'Instrumentos de Vuelo', fullName: 'Instrumentos de Vuelo - PP Avión 2023', count: 00 },
-            { id: 'sistemas', name: 'Sistemas de Aeronaves', fullName: 'Sistemas de Aeronaves - PP Avión 2023', count: 00 },
+            { id: 'sistemas', name: 'Sistemas de Aeronaves', fullName: 'Sistemas de Aeronaves - PP Avión 2023', count: 46 },
             { id: 'servicio-meteo', name: 'Servicio Meteorológico', fullName: 'Servicio Meteorológico - PP Avión 2023', count: 00 },
             { id: 'aerodinamica', name: 'Aerodinámica Básica', fullName: 'Aerodinámica Básica - PP Avión 2023', count: 46 }
         ];
@@ -3079,6 +3079,562 @@
                             C: 'La humedad relativa alcanza el 100 por ciento.'
                         },
                         correct: 'A',
+                        hasAnexo: false
+                    }
+                ]
+            },
+            'sistemas': {
+                questions: [
+                    {
+                        id: 1,
+                        code: 'PREG202411070047',
+                        text: '3657.- Si fuera necesario propulsar manualmente un motor de avión, es extremadamente importante que un piloto competente:',
+                        options: {
+                            A: 'Llame a "contacto" antes de tocar la hélice.',
+                            B: 'Estar en los controles en la cabina.',
+                            C: 'Estar en la cabina y llamar a todos los comandos.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 2,
+                        code: 'PREG202411070048',
+                        text: '3656.- ¿Cuál debería ser la primera acción después de arrancar el motor de un avión?',
+                        options: {
+                            A: 'Ajustar las RPM adecuadas y verifique las indicaciones deseadas en los indicadores del motor.',
+                            B: 'Colocar el magneto o el interruptor de encendido momentáneamente en la posición de apagado para verificar que la conexión a tierra sea adecuada.',
+                            C: 'Probar cada freno y el freno de estacionamiento.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 3,
+                        code: 'PREG202411070049',
+                        text: '3656.1.- ¿Cuál es un propósito del uso de motores alternativos?',
+                        options: {
+                            A: 'Mejor distribución del calor.',
+                            B: 'Para preservar la duración de la culata y mantener temperaturas más bajas.',
+                            C: 'Son relativamente simples y económicos de operar.'
+                        },
+                        correct: 'C',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 4,
+                        code: 'PREG202411070050',
+                        text: '3223.- Uno de los propósitos del sistema de encendido dual en un motor de avión es proporcionar:',
+                        options: {
+                            A: 'Rendimiento mejorado del motor.',
+                            B: 'Distribución uniforme del calor.',
+                            C: 'Presión equilibrada de la culata de cilindros.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 5,
+                        code: 'PREG202411070051',
+                        text: '3223.1.- Se produce una falla del sistema eléctrico (batería y alternador) durante el vuelo. En esta situación, deberías:',
+                        options: {
+                            A: 'Experimentar fallas en el equipo de aviónica.',
+                            B: 'Probablemente experimente fallas en el sistema de encendido del motor, los indicadores de combustible, el sistema de iluminación de la aeronave y el equipo de aviónica.',
+                            C: 'Probablemente experimente fallas en el motor debido a la pérdida de la bomba de combustible impulsada por el motor y también experimente fallas en el equipo de radio, las luces y todos los instrumentos que requieren corriente alterna.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 6,
+                        code: 'PREG202411070052',
+                        text: '3223.2.- Si el cable de tierra entre el magneto y el interruptor de encendido se desconecta, el resultado más notable será que el motor:',
+                        options: {
+                            A: 'Funcionará con asperezas.',
+                            B: 'No se puede arrancar con el interruptor en la posición encendido.',
+                            C: 'No se puede apagar girando el interruptor a la posición de apagado.'
+                        },
+                        correct: 'C',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 7,
+                        code: 'PREG202411070053',
+                        text: '3225.- El principio de funcionamiento de los carburadores de flotador se basa en:',
+                        options: {
+                            A: 'Medición automática de aire en el venturi a medida que la aeronave gana altura.',
+                            B: 'Diferencia de presión de aire en la garganta del venturi y la entrada de aire.',
+                            C: 'Aumento de la velocidad del aire en la garganta de un venturi que provoca un aumento de la presión del aire.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 8,
+                        code: 'PREG202411070054',
+                        text: '3226.- El propósito básico de ajustar la mezcla de aire / combustible en altitud es:',
+                        options: {
+                            A: 'Disminuir la cantidad de combustible en la mezcla para compensar el aumento de la densidad del aire.',
+                            B: 'Disminuir el flujo de combustible para compensar la disminución de la densidad del aire.',
+                            C: 'Aumentar la cantidad de combustible en la mezcla para compensar la disminución de la presión y la densidad del aire.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 9,
+                        code: 'PREG202411070055',
+                        text: '3228.- Mientras navega a 9,500 pies MSL, la mezcla de aire y combustible se ajusta correctamente. ¿Qué ocurrirá si se hace un descenso a 4,500 pies MSL sin reajustar la mezcla?',
+                        options: {
+                            A: 'La mezcla de combustible / aire puede volverse excesivamente pobre.',
+                            B: 'Habrá más combustible en los cilindros del necesario para la combustión normal, y el exceso de combustible absorberá calor y enfriará el motor.',
+                            C: 'La mezcla excesivamente rica creará temperaturas de culata más altas y puede causar detonación.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 10,
+                        code: 'PREG202411070056',
+                        text: '3227.- Durante el arranque en un aeropuerto a gran altura, un piloto nota una ligera aspereza del motor que no se ve afectada por la revisión del magneto, pero que empeora durante la revisión del calor del carburador. En estas circunstancias, ¿cuál sería la acción inicial más lógica?',
+                        options: {
+                            A: 'Verifique los resultados obtenidos con un ajuste más pobre de la mezcla.',
+                            B: 'Taxee de regreso a la línea de vuelo para una revisión de mantenimiento.',
+                            C: 'Reduzca la presión del colector para controlar la detonación.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 11,
+                        code: 'PREG202411070057',
+                        text: '3231.- Si una aeronave está equipada con una hélice de paso fijo y un carburador tipo flotador, lo más probable es que la primera indicación de hielo en el carburador sea:',
+                        options: {
+                            A: 'Aumento de RPM.',
+                            B: 'Rugosidad del motor.',
+                            C: 'Pérdida de RPM.'
+                        },
+                        correct: 'C',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 12,
+                        code: 'PREG202411070058',
+                        text: '3235.- La presencia de hielo en el carburador en una aeronave equipada con una hélice de paso fijo se puede verificar aplicando calor al carburador y observando:',
+                        options: {
+                            A: 'Un aumento de las RPM y luego una disminución gradual de las RPM.',
+                            B: 'Una disminución de RPM y luego una indicación de RPM constante.',
+                            C: 'Una disminución de las RPM y luego un aumento gradual de las RPM.'
+                        },
+                        correct: 'C',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 13,
+                        code: 'PREG202411070059',
+                        text: '3229.- ¿Qué condición es más favorable para el desarrollo de la formación de hielo en el carburador?',
+                        options: {
+                            A: 'Cualquier temperatura por debajo del punto de congelación y una humedad relativa inferior al 50 por ciento.',
+                            B: 'Temperatura entre 32 y 50° F y baja humedad.',
+                            C: 'Temperatura entre 20 y 70° F y alta humedad.'
+                        },
+                        correct: 'C',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 14,
+                        code: 'PREG202411070060',
+                        text: '3230.- Existe la posibilidad de formación de hielo en el carburador incluso cuando la temperatura del aire ambiente es:',
+                        options: {
+                            A: 'De hasta 70° F y la humedad relativa es alta.',
+                            B: 'Hasta 95° F y hay humedad visible.',
+                            C: 'Baja como 0° F y la humedad relativa es alta.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 15,
+                        code: 'PREG202411070061',
+                        text: '3230.1.- La formación de hielo en el carburador puede ocurrir con una OAT tan alta como:',
+                        options: {
+                            A: '100° F y humedad visible.',
+                            B: '20°C y alta humedad relativa.',
+                            C: '75° F y humedad relativa baja.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 16,
+                        code: 'PREG202411070062',
+                        text: '3232.- Aplicar calor al carburador:',
+                        options: {
+                            A: 'Como resultado, más aire pasa por el carburador.',
+                            B: 'Enriquece la mezcla de aire / combustible.',
+                            C: 'No afecta la mezcla de aire / combustible.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 17,
+                        code: 'PREG202411070063',
+                        text: '3233.- ¿Qué cambio ocurre en la mezcla de aire / combustible cuando se aplica calor al carburador?',
+                        options: {
+                            A: 'Una disminución en las RPM resulta de la mezcla pobre.',
+                            B: 'La mezcla de aire / combustible se vuelve más rica.',
+                            C: 'La mezcla de aire y combustible se vuelve más pobre.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 18,
+                        code: 'PREG202411070064',
+                        text: '3234.- En términos generales, el uso del calor del carburador tiende a:',
+                        options: {
+                            A: 'Disminuir el rendimiento del motor.',
+                            B: 'Aumentar el rendimiento del motor.',
+                            C: 'No tienen ningún efecto sobre el rendimiento del motor.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 19,
+                        code: 'PREG202411070065',
+                        text: '3236.- Con respecto al hielo del carburador, los sistemas de carburador de tipo flotador en comparación con los sistemas de inyección de combustible generalmente se consideran:',
+                        options: {
+                            A: 'Más susceptible a la formación de hielo.',
+                            B: 'Igualmente susceptible a la formación de hielo.',
+                            C: 'Menos susceptible a la formación de hielo.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 20,
+                        code: 'PREG202411070066',
+                        text: '3224.- En aeronaves equipadas con bombas de combustible, ¿cuándo se usa la bomba auxiliar de accionamiento eléctrico?',
+                        options: {
+                            A: 'Todo el tiempo para ayudar a la bomba de combustible impulsada por el motor.',
+                            B: 'En caso de que falle la bomba de combustible impulsada por el motor.',
+                            C: 'Constantemente excepto en el arranque del motor.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 21,
+                        code: 'PREG202411070067',
+                        text: '3237.- Si el grado de combustible utilizado en el motor de un avión es menor que el especificado para el motor, lo más probable es que cause:',
+                        options: {
+                            A: 'Una mezcla de combustible y aire que no es uniforme en todos los cilindros.',
+                            B: 'Temperaturas más bajas de la culata de cilindros.',
+                            C: 'Detonación.'
+                        },
+                        correct: 'C',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 22,
+                        code: 'PREG202411070068',
+                        text: '3238.- La detonación puede ocurrir en configuraciones de alta potencia cuando:',
+                        options: {
+                            A: 'La mezcla de combustible se enciende instantáneamente en lugar de arder de manera progresiva y uniforme.',
+                            B: 'Una mezcla de combustible excesivamente rica provoca una ganancia explosiva de potencia.',
+                            C: 'La mezcla de combustible se enciende demasiado pronto debido a los depósitos de carbón caliente en el cilindro.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 23,
+                        code: 'PREG202411070069',
+                        text: '3238.1.- La detonación ocurre en un motor de avión alternativo cuando:',
+                        options: {
+                            A: 'Las bujías están sucias o en cortocircuito o el cableado está defectuoso.',
+                            B: 'Los puntos calientes en la cámara de combustión encienden la mezcla de aire/combustible antes del encendido normal.',
+                            C: 'La carga no quemada en los cilindros explota en lugar de arder normalmente.'
+                        },
+                        correct: 'C',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 24,
+                        code: 'PREG202411070070',
+                        text: '3240.- El disparo incontrolado de la carga de combustible / aire antes del encendido normal por chispa se conoce como:',
+                        options: {
+                            A: 'Combustión.',
+                            B: 'Pre encendido.',
+                            C: 'Detonación.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 25,
+                        code: 'PREG202411070071',
+                        text: '3242.- ¿Qué tipo de combustible se puede sustituir por una aeronave si el octanaje recomendado no está disponible?',
+                        options: {
+                            A: 'El siguiente gas de aviación de mayor octanaje.',
+                            B: 'El siguiente gas de aviación de menor octanaje.',
+                            C: 'Gas automotriz sin plomo del mismo octanaje.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 26,
+                        code: 'PREG202411070072',
+                        text: '3243.- Llenar los tanques de combustible después del último vuelo del día se considera un buen procedimiento operativo porque:',
+                        options: {
+                            A: 'Fuerza el agua existente a la parte superior del tanque lejos de las líneas de combustible al motor.',
+                            B: 'Previene la expansión del combustible eliminando el espacio de aire en los tanques.',
+                            C: 'Evita la condensación de humedad eliminando el espacio de aire en los tanques.'
+                        },
+                        correct: 'C',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 27,
+                        code: 'PREG202411070073',
+                        text: '3243.1.- Para purgar adecuadamente el agua del sistema de combustible de una aeronave equipada con sumideros de tanque de combustible y un drenaje rápido del colador de combustible, es necesario drenar el combustible del:',
+                        options: {
+                            A: 'Drenaje del colador de combustible.',
+                            B: 'Punto más bajo en el sistema de combustible.',
+                            C: 'Drenaje del colador de combustible y sumideros del tanque de combustible.'
+                        },
+                        correct: 'C',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 28,
+                        code: 'PREG202411070074',
+                        text: '3239.- Si un piloto sospecha que el motor (con una hélice de paso fijo) está detonando durante el ascenso después del despegue, la acción correctiva inicial a tomar sería:',
+                        options: {
+                            A: 'Mezcla pobre.',
+                            B: 'Aplique calor al carburador.',
+                            C: 'Baje la nariz del avión ligeramente para aumentar la velocidad con respecto al aire.'
+                        },
+                        correct: 'C',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 29,
+                        code: 'PREG202411070075',
+                        text: '3221.- Las temperaturas del motor excesivamente altas:',
+                        options: {
+                            A: 'Causar daños a las mangueras conductoras de calor y deformación de las aletas de refrigeración del cilindro.',
+                            B: 'Causan pérdida de potencia, consumo excesivo de aceite y posibles daños internos permanentes en el motor.',
+                            C: 'No afectan apreciablemente al motor de un avión.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 30,
+                        code: 'PREG202411070076',
+                        text: '3221.1.- Las temperaturas del motor excesivamente altas, ya sea en el aire o en el suelo:',
+                        options: {
+                            A: 'Aumentarán el consumo de combustible y puede aumentar la potencia debido al aumento de calor.',
+                            B: 'Provocarán daños en las mangueras conductoras de calor y deformación de los ventiladores de refrigeración del cilindro.',
+                            C: 'Causarán pérdida de potencia, consumo excesivo de aceite y posibles daños internos permanentes en el motor.'
+                        },
+                        correct: 'C',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 31,
+                        code: 'PREG202411070077',
+                        text: '3222.- Si la temperatura del aceite del motor y la temperatura de la culata de cilindros han excedido su rango de operación normal, el piloto puede haber estado operando con:',
+                        options: {
+                            A: 'La mezcla se puso demasiado rica.',
+                            B: 'Presión de aceite superior a la normal.',
+                            C: 'Demasiada potencia y con la mezcla demasiado pobre.'
+                        },
+                        correct: 'C',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 32,
+                        code: 'PREG202411070078',
+                        text: '3241.- ¿Cuál es la causa más probable de que los indicadores de temperatura de la culata de cilindros y de la temperatura del aceite del motor excedan sus rangos de funcionamiento normales?',
+                        options: {
+                            A: 'Usar combustible que tiene una clasificación de combustible inferior a la especificada.',
+                            B: 'Usar combustible que tiene una clasificación de combustible superior a la especificada.',
+                            C: 'Funcionamiento con una presión de aceite superior a la normal.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 33,
+                        code: 'PREG202411070079',
+                        text: '3244.- Para el enfriamiento interno, los motores de aeronave alternativos dependen especialmente de:',
+                        options: {
+                            A: 'Un termostato que funcione correctamente.',
+                            B: 'Aire que fluye sobre el colector de escape.',
+                            C: 'La circulación de aceite lubricante.'
+                        },
+                        correct: 'C',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 34,
+                        code: 'PREG202411070080',
+                        text: '3245.- Una indicación de temperatura del aceite del motor anormalmente alta puede ser causada por:',
+                        options: {
+                            A: 'El nivel de aceite es demasiado bajo.',
+                            B: 'Opera con un aceite de viscosidad demasiado alta.',
+                            C: 'Opera con una mezcla excesivamente rica.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 35,
+                        code: 'PREG202411070081',
+                        text: '3651.- ¿Qué acción puede tomar un piloto para ayudar a enfriar un motor que se sobrecalienta durante un ascenso?',
+                        options: {
+                            A: 'Reducir la velocidad de ascenso y aumentar la velocidad del aire.',
+                            B: 'Reducir la velocidad de ascenso y aumentar las RPM.',
+                            C: 'Aumentar la velocidad de ascenso y aumentar las RPM.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 36,
+                        code: 'PREG202411070082',
+                        text: '3652.- ¿Cuál es un procedimiento para ayudar a enfriar un motor que se sobrecalienta?',
+                        options: {
+                            A: 'Enriquece la mezcla de combustible.',
+                            B: 'Aumente las RPM.',
+                            C: 'Reducir la velocidad con respecto al aire.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 37,
+                        code: 'PREG202411070083',
+                        text: '3711.- La regla más importante para recordar en caso de un corte de energía después de estar en el aire es:',
+                        options: {
+                            A: 'Establezca inmediatamente la actitud de planeo adecuada y la velocidad con respecto al aire adecuada.',
+                            B: 'Compruebe rápidamente el suministro de combustible para ver si se ha agotado el combustible.',
+                            C: 'Determine la dirección del viento para planificar el aterrizaje forzoso.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 38,
+                        code: 'PREG202411070084',
+                        text: '3653.- ¿Cómo se controla el funcionamiento del motor en un motor equipado con una hélice de velocidad constante?',
+                        options: {
+                            A: 'El acelerador controla la salida de potencia registrada en el manómetro del colector y el control de la hélice regula las RPM del motor.',
+                            B: 'El acelerador controla la salida de potencia registrada en el manómetro del colector y el control de la hélice regula un ángulo de pala constante.',
+                            C: 'El acelerador controla las RPM del motor registradas en el tacómetro y el control de mezcla regula la salida de potencia.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 39,
+                        code: 'PREG202411070085',
+                        text: '3654.- ¿Cuál es la ventaja de una hélice de velocidad constante?',
+                        options: {
+                            A: 'Permite al piloto seleccionar y mantener la velocidad de crucero deseada.',
+                            B: 'Permite al piloto seleccionar el ángulo de pala para obtener el rendimiento más eficiente.',
+                            C: 'Proporciona un funcionamiento más suave con RPM estables y elimina las vibraciones.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 40,
+                        code: 'PREG202411070086',
+                        text: '3655.- Una precaución para el funcionamiento de un motor equipado con una hélice de velocidad constante es:',
+                        options: {
+                            A: 'Evite los ajustes de RPM altas con alta presión del colector.',
+                            B: 'Evite los ajustes de alta presión del colector con bajas RPM.',
+                            C: 'Utilice siempre una mezcla rica con ajustes de RPM altos.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 41,
+                        code: 'PREG202411070087',
+                        text: '3207.- ¿En qué condiciones de vuelo es mayor el efecto de torsión en un avión monomotor?',
+                        options: {
+                            A: 'Baja Velocidad con respecto al aire, alta potencia, alto ángulo de ataque.',
+                            B: 'Baja velocidad con respecto al aire, baja potencia, bajo ángulo de ataque.',
+                            C: 'Alta velocidad con respecto al aire, alta potencia, alto ángulo de ataque.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 42,
+                        code: 'PREG202411070088',
+                        text: '3208.- La tendencia de giro a la izquierda de un avión causada por el factor P es el resultado de la:',
+                        options: {
+                            A: 'La rotación en sentido horario del motor y la hélice girando el avión en sentido anti horario.',
+                            B: 'La pala de la hélice desciende a la derecha, produciendo más empuje que la pala ascendente de la izquierda.',
+                            C: 'Fuerzas giroscópicas aplicadas a las palas giratorias de la hélice que actúan 90° antes del punto en que se aplicó la fuerza.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 43,
+                        code: 'PREG202411070089',
+                        text: '3209.- ¿Cuándo el factor P hace que el avión se desvíe hacia la izquierda?',
+                        options: {
+                            A: 'Cuando en ángulos de ataque bajos.',
+                            B: 'Cuando se encuentra en ángulos de ataque elevados.',
+                            C: 'Cuando está a alta velocidad.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 44,
+                        code: 'PREG202411070090',
+                        text: '3658.- Durante la inspección previa al vuelo, ¿quién es responsable de determinar que la aeronave es segura para volar?',
+                        options: {
+                            A: 'El piloto al mando.',
+                            B: 'Propietario u operador.',
+                            C: 'El mecánico certificado que realizó la inspección anual.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 45,
+                        code: 'PREG202411070091',
+                        text: '3659.- ¿Cómo se debe realizar una inspección previa al vuelo de la aeronave para el primer vuelo del día?',
+                        options: {
+                            A: 'Camine rápido con una revisión de gasolina y aceite.',
+                            B: 'Medios rigurosos y sistemáticos recomendados por el fabricante.',
+                            C: 'Any sequence determined by the pilot al mando.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 46,
+                        code: 'PREG202411070092',
+                        text: '3660.- ¿Quién es el principal responsable de mantener una aeronave en condiciones de aeronavegabilidad?',
+                        options: {
+                            A: 'Piloto al mando.',
+                            B: 'Propietario u operador.',
+                            C: 'Mecánico.'
+                        },
+                        correct: 'B',
                         hasAnexo: false
                     }
                 ]
