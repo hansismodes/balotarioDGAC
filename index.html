@@ -97,17 +97,27 @@
         }
         
         .flashcard-front, .flashcard-back {
-            grid-area: 1 / 1 / 2 / 2;        /* <-- Reemplaza 'position: absolute'. Apila ambas caras en la misma celda */
+            grid-area: 1 / 1 / 2 / 2;
             width: 100%;
             height: 100%;
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
             border-radius: 20px;
+            
+            /* 1. Le avisa al navegador que optimice este elemento para animaciones 3D */
+            will-change: transform; 
+        }
+
+        .flashcard-front {
+            /* 2. Separa físicamente la cara delantera 1 píxel hacia adelante en el espacio 3D */
+            transform: translateZ(1px);
+            -webkit-transform: translateZ(1px);
         }
         
         .flashcard-back {
-            transform: rotateY(180deg);
-            -webkit-transform: rotateY(180deg);
+            /* 3. Mantiene su rotación pero añade el píxel de separación en su propio eje */
+            transform: rotateY(180deg) translateZ(1px);
+            -webkit-transform: rotateY(180deg) translateZ(1px);
         }
 
         .option-row {
