@@ -434,7 +434,7 @@
             { id: 'navegacion', name: 'Navegación', fullName: 'Navegación - PP Avión 2023', count: 00 },
             { id: 'instrumentos', name: 'Instrumentos de Vuelo', fullName: 'Instrumentos de Vuelo - PP Avión 2023', count: 00 },
             { id: 'sistemas', name: 'Sistemas de Aeronaves', fullName: 'Sistemas de Aeronaves - PP Avión 2023', count: 46 },
-            { id: 'servicio-meteo', name: 'Servicio Meteorológico', fullName: 'Servicio Meteorológico - PP Avión 2023', count: 00 },
+            { id: 'servicio-meteo', name: 'Servicio Meteorológico', fullName: 'Servicio Meteorológico - PP Avión 2023', count: 41 },
             { id: 'aerodinamica', name: 'Aerodinámica Básica', fullName: 'Aerodinámica Básica - PP Avión 2023', count: 46 }
         ];
         
@@ -3635,6 +3635,466 @@
                             C: 'Mecánico.'
                         },
                         correct: 'B',
+                        hasAnexo: false
+                    }
+                ]
+            },
+            'servicio-meteorologico': {
+                questions: [
+                    {
+                        id: 1,
+                        code: 'PREG202411070430',
+                        text: '3464.- (Refiérase a la Figura 12.) La dirección y velocidad del viento en KJFK es de:',
+                        options: {
+                            A: '180° verdadero a 4 nudos.',
+                            B: '180° magnético a 4 nudos.',
+                            C: '040° verdadero a 18 nudos.'
+                        },
+                        correct: 'A',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 2,
+                        code: 'PREG202411070431',
+                        text: '3465.- (Refiérase a la Figura 12). ¿Cuáles son las condiciones del viento en Wink, Texas (KINK)?',
+                        options: {
+                            A: 'Calma.',
+                            B: '110° a 12 nudos, ráfagas de 18 nudos.',
+                            C: '111° a 2 nudos, ráfagas de 18 nudos.'
+                        },
+                        correct: 'B',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 3,
+                        code: 'PREG202411070432',
+                        text: '3466.- (Refiérase a la Figura 12). El cielo en Chicago Midway (KMDW) se reporta como:',
+                        options: {
+                            A: 'Cielo parcial cubierto a 700 pies, visibilidad de 1-1/2 millas con humo.',
+                            B: 'Cubierto a 700 pies, visibilidad de 1-1/2 millas con humo.',
+                            C: 'Cielo claro, visibilidad de 7 millas.'
+                        },
+                        correct: 'B',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 4,
+                        code: 'PREG202411070433',
+                        text: '3467.- (Refiérase a la Figura 12). El reporte meteorológico especial (SPECI) para KOKC indica que:',
+                        options: {
+                            A: 'El viento cambió de dirección y velocidad a las 1930Z.',
+                            B: 'El techo es de 3,000 pies con visibilidad de 5 millas.',
+                            C: 'El altímetro es de 29.92 pulgadas de mercurio.'
+                        },
+                        correct: 'A',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 5,
+                        code: 'PREG202411070434',
+                        text: '3468.- (Refiérase a la Figura 12). La presión barométrica (altímetro) en Tucson (KTUS) es:',
+                        options: {
+                            A: '29.92 pulg. Hg.',
+                            B: '30.12 pulg. Hg.',
+                            C: '29.82 pulg. Hg.'
+                        },
+                        correct: 'B',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 6,
+                        code: 'PREG202411070435',
+                        text: '3472.- Los reportes meteorológicos en ruta conocidos como SIGMET (Información Meteorológica Significativa) se emiten para notificar a los pilotos sobre:',
+                        options: {
+                            A: 'Condiciones climáticas peligrosas para todas las aeronaves, como turbulencia severa o formación de hielo severa no convectiva.',
+                            B: 'Condiciones meteorológicas que solo afectan a aeronaves ligeras o de entrenamiento.',
+                            C: 'Pronósticos de viento y temperatura en niveles altos de vuelo.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 7,
+                        code: 'PREG202411070436',
+                        text: '3473.- Los AIRMET se emiten de forma rutinaria para informar sobre fenómenos meteorológicos que son potencialmente peligrosos para:',
+                        options: {
+                            A: 'Únicamente aeronaves de transporte comercial de gran tamaño.',
+                            B: 'Todas las aeronaves, pero especialmente para aquellas con capacidades limitadas o pilotos con poca experiencia.',
+                            C: 'Vuelos que operan exclusivamente por encima de los 18,000 pies.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 8,
+                        code: 'PREG202411070437',
+                        text: '3474.- Un SIGMET Convectivo (Convective SIGMET) se emite para alertar a los pilotos sobre la presencia de:',
+                        options: {
+                            A: 'Líneas de turbonada, tormentas eléctricas severas, granizo grande o tornados.',
+                            B: 'Niebla de radiación persistente sobre áreas costeras.',
+                            C: 'Cizalladura del viento en aire claro a niveles muy altos.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 9,
+                        code: 'PREG202411070438',
+                        text: '3475.- (Refiérase a la Figura 14). ¿Cuál es el viento pronosticado a 9,000 pies sobre Kansas City (MKC)?',
+                        options: {
+                            A: '230° verdadero a 32 nudos.',
+                            B: '230° verdadero a 21 nudos.',
+                            C: '050° verdadero a 25 nudos.'
+                        },
+                        correct: 'A',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 10,
+                        code: 'PREG202411070439',
+                        text: '3476.- (Refiérase a la Figura 14). ¿Cuál es la temperatura pronosticada a 6,000 pies sobre Amarillo (AMA)?',
+                        options: {
+                            A: '-2° C.',
+                            B: '2° C.',
+                            C: '10° C.'
+                        },
+                        correct: 'B',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 11,
+                        code: 'PREG202411070440',
+                        text: '3477.- (Refiérase a la Figura 14). ¿Cuál es el viento y la temperatura pronosticados a 12,000 pies sobre St. Louis (STL)?',
+                        options: {
+                            A: '230° a 39 nudos; -4° C.',
+                            B: '210° a 35 nudos; 4° C.',
+                            C: '230° a 25 nudos; 0° C.'
+                        },
+                        correct: 'A',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 12,
+                        code: 'PREG202411070441',
+                        text: '3478.- En un pronóstico de vientos y temperaturas en altura (FB), el código "9900" indica que el viento es:',
+                        options: {
+                            A: 'De 99 nudos o más, con dirección variable.',
+                            B: 'Calma o ligero y variable, con velocidad menor a 5 nudos.',
+                            C: 'No disponible debido a fallas en los sensores de medición.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 13,
+                        code: 'PREG202411070442',
+                        text: '3479.- (Refiérase a la Figura 15). De acuerdo con el pronóstico de área (FA) provisto, ¿a qué altitud se espera la base de la capa de formación de hielo estructural?',
+                        options: {
+                            A: 'A nivel del suelo (superficie).',
+                            B: 'A 4,000 pies MSL.',
+                            C: 'A 10,000 pies MSL.'
+                        },
+                        correct: 'B',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 14,
+                        code: 'PREG202411070443',
+                        text: '3480.- (Refiérase a la Figura 15). Según el pronóstico de área (FA), ¿qué altitud máxima se prevé para la turbulencia moderada?',
+                        options: {
+                            A: '12,000 pies MSL.',
+                            B: '16,000 pies MSL.',
+                            C: '8,000 pies MSL.'
+                        },
+                        correct: 'A',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 15,
+                        code: 'PREG202411070444',
+                        text: '3481.- (Refiérase a la Figura 15). ¿Qué condiciones de techo y visibilidad se pronostican para un vuelo VFR sobre el estado de Tennessee (TN)?',
+                        options: {
+                            A: 'Cielo despejado con visibilidad de 3 millas en neblina.',
+                            B: 'Techo de 3,000 pies fracturado, visibilidad superior a 5 millas.',
+                            C: 'Techo de 5,000 pies cubierto, visibilidad de 2 millas con lluvia.'
+                        },
+                        correct: 'B',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 16,
+                        code: 'PREG202411070445',
+                        text: '3455.- Un Pronóstico de Área de Aviación (FA) tradicional es un reporte que cubre una región equivalente a:',
+                        options: {
+                            A: 'Un radio de 5 millas náuticas alrededor de un aeropuerto específico.',
+                            B: 'Varios estados o una gran porción del espacio aéreo de un país.',
+                            C: 'Únicamente las trayectorias de aproximación de las pistas principales.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 17,
+                        code: 'PREG202411070446',
+                        text: '3456.- La sección de un Pronóstico de Área (FA) que indica el desarrollo previsto de nubes y los tipos de clima significativos se denomina:',
+                        options: {
+                            A: 'Sinopsis.',
+                            B: 'Cielo y Tiempo VFR (VFR Clouds and Weather).',
+                            C: 'Peligros (Hazards).'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 18,
+                        code: 'PREG202411070447',
+                        text: '3457.- ¿Qué sección del Pronóstico de Área (FA) resume brevemente la ubicación y el movimiento de los frentes y sistemas de presión?',
+                        options: {
+                            A: 'Sinopsis (Synopsis).',
+                            B: 'Resumen de bitácora.',
+                            C: 'Sección de enmiendas.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 19,
+                        code: 'PREG202411070448',
+                        text: '3458.- Para determinar la presencia de nubosidad generalizada o precipitación a lo largo de una ruta VFR extensa, el piloto debe consultar en el FA la sección de:',
+                        options: {
+                            A: 'VFR Clouds and Weather.',
+                            B: 'NOTAMs de ruta.',
+                            C: 'Altimetría regional.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 20,
+                        code: 'PREG202411070449',
+                        text: '3459.- En un reporte meteorológico de piloto (PIREP), el identificador de campo "OV" y "TM" significan respectivamente:',
+                        options: {
+                            A: 'Overcast (Cubierto) y Temperature (Temperatura).',
+                            B: 'Location (Ubicación/Over) y Time (Hora del reporte).',
+                            C: 'Ovation (Dirección) y Turbulence (Turbulencia).'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 21,
+                        code: 'PREG202411070450',
+                        text: '3460.- Interprete el siguiente fragmento de un PIREP: "UA / OV OKC 063064 / TM 1522 / FL080 / TP C172"',
+                        options: {
+                            A: 'Reporte rutinario, a 64 millas de OKC en el radial 063, a las 1522Z, altitud de 8,000 pies, aeronave Cessna 172.',
+                            B: 'Reporte de emergencia, sobre OKC a las 0630Z, altitud de 6,400 pies, en un bimotor.',
+                            C: 'Reporte de visibilidad, sobre el VOR OKC con rumbo de 063 grados a las 1522Z.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 22,
+                        code: 'PREG202411070451',
+                        text: '3461.- Un Pronóstico de Terminal de Aeródromo (TAF) estándar tiene un período de validez regular de:',
+                        options: {
+                            A: '2 horas corridas.',
+                            B: '24 o 30 horas.',
+                            C: '12 horas únicamente.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 23,
+                        code: 'PREG202411070452',
+                        text: '3462.- (Refiérase a la Figura 13). De acuerdo con el TAF para Memphis (KMEM), ¿qué cambio climático se espera a partir de las 2200Z del día 17?',
+                        options: {
+                            A: 'El viento cambiará al 340° a 10 nudos con cielo cubierto a 4,000 pies.',
+                            B: 'Se prevén tormentas eléctricas con lluvia moderada.',
+                            C: 'La visibilidad se reducirá a 1 milla debido a niebla densa.'
+                        },
+                        correct: 'A',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 24,
+                        code: 'PREG202411070453',
+                        text: '3463.- (Refiérase a la Figura 13). Según el TAF de Oklahoma City (KOKC), ¿en qué intervalo de tiempo se mantendrán condiciones completamente VFR?',
+                        options: {
+                            A: 'Durante todo el período del pronóstico sin excepción.',
+                            B: 'A partir de las 0500Z cuando cesa la precipitación y la nubosidad queda dispersa.',
+                            C: 'Únicamente en las primeras dos horas de la mañana.'
+                        },
+                        correct: 'B',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 25,
+                        code: 'PREG202411070454',
+                        text: '3469.- Al solicitar una información meteorológica (Weather Briefing) por teléfono antes de un vuelo cross-country matutino, la consulta completa inicial debe ser una:',
+                        options: {
+                            A: 'Información Estándar (Standard Briefing).',
+                            B: 'Información Breve (Abbreviated Briefing).',
+                            C: 'Información de Perspectiva (Outlook Briefing).'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 26,
+                        code: 'PREG202411070455',
+                        text: '3470.- ¿Qué tipo de información meteorológica (Briefing) debe solicitar un piloto si su hora estimada de salida es en 6 horas o más en el futuro?',
+                        options: {
+                            A: 'Información de Perspectiva (Outlook Briefing).',
+                            B: 'Información Estándar.',
+                            C: 'Información Complementaria.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 27,
+                        code: 'PREG202411070456',
+                        text: '3471.- Una información meteorológica abreviada (Abbreviated Briefing) se utiliza principalmente para:',
+                        options: {
+                            A: 'Reemplazar por completo a la información estándar en vuelos locales.',
+                            B: 'Actualizar un reporte recibido previamente con datos más recientes o específicos.',
+                            C: 'Obtener pronósticos climáticos a largo plazo para vuelos internacionales.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 28,
+                        code: 'PREG202411070457',
+                        text: '3482.- Un reporte meteorológico de radar (SD) contiene información detallada sobre:',
+                        options: {
+                            A: 'La ubicación, altura de los ecos máximos y movimiento de las áreas de precipitación.',
+                            B: 'La visibilidad horizontal medida por los sensores en la pista.',
+                            C: 'Los techos de nubes medidos por un ceilómetro láser.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 29,
+                        code: 'PREG202411070458',
+                        text: '3483.- ¿Qué tipo de datos se pueden obtener al interpretar una Carta de Resumen de Radar (Radar Summary Chart)?',
+                        options: {
+                            A: 'Áreas de niebla y neblina generalizadas.',
+                            B: 'Líneas de tormenta, dirección de movimiento de las celdas y topes de las nubes de tormenta.',
+                            C: 'Presión al nivel del mar e isobaras.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 30,
+                        code: 'PREG202411070459',
+                        text: '3484.- (Refiérase a la Figura 16). En una carta de análisis de superficie, las líneas continuas que unen puntos de igual presión atmosférica se denominan:',
+                        options: {
+                            A: 'Isotermas.',
+                            B: 'Isobaras.',
+                            C: 'Isogonas.'
+                        },
+                        correct: 'B',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 31,
+                        code: 'PREG202411070460',
+                        text: '3485.- (Refiérase a la Figura 16). De acuerdo con el modelo de estación de la carta, ¿qué representa una flecha o línea que se extiende desde el círculo de la estación?',
+                        options: {
+                            A: 'La dirección de procedencia del viento.',
+                            B: 'La ruta de vuelo recomendada.',
+                            C: 'La tendencia del cambio de presión.'
+                        },
+                        correct: 'A',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 32,
+                        code: 'PREG202411070461',
+                        text: '3486.- (Refiérase a la Figura 17). En una carta de representación del clima (Weather Depiction Chart), las condiciones climáticas de tipo Margen VFR (MVFR) están delimitadas por:',
+                        options: {
+                            A: 'Líneas continuas sin sombreado.',
+                            B: 'Áreas completamente sombreadas en color verde o gris.',
+                            C: 'Líneas discontinuas o contornos sombreados.'
+                        },
+                        correct: 'A',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 33,
+                        code: 'PREG202411070462',
+                        text: '3487.- (Refiérase a la Figura 17). Las áreas sombreadas delimitadas por líneas continuas en una carta de representación del clima indican:',
+                        options: {
+                            A: 'Condiciones de vuelo por instrumentos (IFR), con techos inferiores a 1,000 pies y/o visibilidad menor a 3 millas.',
+                            B: 'Condiciones de vuelo visual (VFR) perfectas.',
+                            C: 'Presencia de vientos fuertes en la superficie.'
+                        },
+                        correct: 'A',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 34,
+                        code: 'PREG202411070463',
+                        text: '3488.- (Refiérase a la Figura 18). ¿Qué información útil proporciona una Carta de Pronóstico del Clima Significativo de Bajo Nivel (Low-Level Significant Weather Prog Chart)?',
+                        options: {
+                            A: 'Pronósticos de turbulencia, niveles de congelación y áreas de IFR/MVFR desde la superficie hasta los 24,000 pies.',
+                            B: 'Ubicación exacta de las radioayudas inoperativas.',
+                            C: 'Consumo estimado de combustible debido a vientos de cola.'
+                        },
+                        correct: 'A',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 35,
+                        code: 'PREG202411070464',
+                        text: '3526.- ¿Qué deben indicar los pilotos inicialmente al llamar por teléfono a un centro de información meteorológica para obtener información meteorológica previa al vuelo?',
+                        options: {
+                            A: 'La ruta prevista de las frecuencias de radio de vuelo.',
+                            B: 'La dirección del piloto al mando.',
+                            C: 'La ruta prevista de vuelo y destino.'
+                        },
+                        correct: 'C',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 36,
+                        code: 'PREG202411070465',
+                        text: '3527.- ¿Qué información inicial deben proporcionar los pilotos al comunicarse con un despachador o meteorólogo de vuelo para su briefing?',
+                        options: {
+                            A: 'Indicar el número de ocupantes a bordo.',
+                            B: 'Identificarse como pilotos y el tipo de vuelo planeado (VFR/IFR).',
+                            C: 'Indicar su tiempo total de vuelo.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 37,
+                        code: 'PREG202411070466',
+                        text: '3528.- Al llamar por teléfono a un centro de información meteorológica para obtener información meteorológica previa al vuelo, los pilotos deben indicar:',
+                        options: {
+                            A: 'La identificación de la aeronave o el nombre del piloto.',
+                            B: 'Verdadera velocidad aérea.',
+                            C: 'Combustible a bordo.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 38,
+                        code: 'PREG202411070467',
+                        text: '3528.1.- Cuando hable con un especialista de servicio de vuelo sobre el clima, debe indicar:',
+                        options: {
+                            A: 'El tipo de licencia que posee.',
+                            B: 'Las horas de vuelo nocturno acumuladas.',
+                            C: 'Si el vuelo planeado se realizará bajo las reglas de vuelo visual (VFR) o por instrumentos (IFR).'
+                        },
+                        correct: 'C',
                         hasAnexo: false
                     }
                 ]
