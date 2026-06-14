@@ -429,7 +429,7 @@
             { id: 'vuelo-ruta', name: 'Vuelo en Ruta', fullName: 'Vuelo en Ruta - PP Avión 2023', count: 77 },
             { id: 'comunicacion', name: 'Procedimientos de Comunicación', fullName: 'Procedimientos de Comunicación - PP Avión 2023', count: 51 },
             { id: 'meteorologia', name: 'Meteorología', fullName: 'Meteorología - PP Avión 2023', count: 60 },
-            { id: 'aeropuerto', name: 'Operaciones Aeroportuarias', fullName: 'Procedimientos y Operaciones Aeroportuarias - PP Avión 2023', count: 00 },
+            { id: 'operaciones-aeroportuarias', name: 'Operaciones Aeroportuarias', fullName: 'Procedimientos y Operaciones Aeroportuarias - PP Avión 2023', count: 56 },
             { id: 'performance', name: 'Performance', fullName: 'Performance - PP Avión 2023', count: 00 },
             { id: 'navegacion', name: 'Navegación', fullName: 'Navegación - PP Avión 2023', count: 00 },
             { id: 'instrumentos', name: 'Instrumentos de Vuelo', fullName: 'Instrumentos de Vuelo - PP Avión 2023', count: 00 },
@@ -3077,6 +3077,682 @@
                             A: 'El vapor de agua se condensa.',
                             B: 'Hay vapor de agua.',
                             C: 'La humedad relativa alcanza el 100 por ciento.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    }
+                ]
+            },
+            'operaciones-aeroportuarias': {
+                questions: [
+                    {
+                        id: 1,
+                        code: 'PREG2024110702731235',
+                        text: '3123.- ¿Cuál es el procedimiento de salida de patrón de tráfico correcto para usar en un aeropuerto no controlado?',
+                        options: {
+                            A: 'Salga en cualquier dirección compatible con la seguridad, después de cruzar el límite del aeropuerto.',
+                            B: 'Haga todos los giros a la izquierda.',
+                            C: 'Cumplir con cualquier patrón de tráfico de la AAC establecido para el aeropuerto.'
+                        },
+                        correct: 'C',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 2,
+                        code: 'PREG202411070276',
+                        text: '3123.1.- La posición de entrada recomendada a un patrón de tráfico del aeropuerto es:',
+                        options: {
+                            A: '45° hasta el tramo base justo debajo de la altitud del patrón de tráfico.',
+                            B: 'Para ingresar 45° en el punto medio del tramo a favor del viento a la altitud del patrón de tráfico.',
+                            C: 'Alinearse con el tramo de viento en cola (downwind) cruzando directamente sobre el centro del aeropuerto.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 3,
+                        code: 'PREG202411070277',
+                        text: '3123.2.- Si se aproxima para aterrizar en un aeropuerto no controlado, la AAC recomienda que el piloto intercepte el patrón de tráfico a la altitud del patrón:',
+                        options: {
+                            A: 'Entrando directamente en el tramo base.',
+                            B: 'Con una inclinación de 45° en el punto medio del tramo a favor del viento.',
+                            C: 'Cruzando a favor del viento a 500 pies por encima de la altitud establecida.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 4,
+                        code: 'PREG202411070278',
+                        text: '3124.- Al operar un avión en las proximidades de un aeropuerto controlado, la dirección de los giros en el patrón de tráfico debe ser:',
+                        options: {
+                            A: 'A la izquierda a menos que se indique lo contrario.',
+                            B: 'A la derecha a menos que se indique lo contrario.',
+                            C: 'A discreción del piloto al mando.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 5,
+                        code: 'PREG202411070279',
+                        text: '3805.- ¿Cuál es el procedimiento de aproximación de patrón de tráfico recomendado para un aeropuerto no controlado?',
+                        options: {
+                            A: 'Entrar a favor del viento a 45 grados en el tramo de base.',
+                            B: 'Entrar a favor del viento a 90 grados en el punto medio.',
+                            C: 'Entrar a favor del viento a 45 grados en el punto medio del tramo a favor del viento.'
+                        },
+                        correct: 'C',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 6,
+                        code: 'PREG202411070280',
+                        text: '3806.- Al operar en un aeropuerto no controlado, la radio común de aviso de tráfico (CTAF) se utiliza para:',
+                        options: {
+                            A: 'Informar y escuchar las posiciones e intenciones de tráfico local.',
+                            B: 'Solicitar autorización de aterrizaje de la estación local.',
+                            C: 'Monitorear transmisiones de radar del control de área.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 7,
+                        code: 'PREG202411070281',
+                        text: '3807.- Un piloto debe auto-anunciar sus intenciones en la frecuencia CTAF adecuada cuando se encuentre a qué distancia de un aeropuerto no controlado:',
+                        options: {
+                            A: '5 millas.',
+                            B: '20 millas.',
+                            C: '10 millas.'
+                        },
+                        correct: 'C',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 8,
+                        code: 'PREG202411070282',
+                        text: '3808.- El anuncio de intenciones por radio en un aeropuerto no controlado (CTAF) es:',
+                        options: {
+                            A: 'Obligatorio para todas las operaciones IFR únicamente.',
+                            B: 'Recomendado como buena práctica de seguridad.',
+                            C: 'Requerido solo de noche.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 9,
+                        code: 'PREG202411070283',
+                        text: '3137.- Las marcas de umbral de pista consisten en ocho franjas verticales dispuestas simétricamente respecto al eje de la pista que indican:',
+                        options: {
+                            A: 'El inicio de la pista disponible para el aterrizaje.',
+                            B: 'El punto de máxima resistencia estructural.',
+                            C: 'El área exclusiva para parada de emergencia.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 10,
+                        code: 'PREG202411070284',
+                        text: '3138.- Una línea continua amarilla paralela al eje de una calle de rodaje indica:',
+                        options: {
+                            A: 'El eje de la calle de rodaje.',
+                            B: 'El límite lateral de la calle de rodaje.',
+                            C: 'El punto de espera de la pista.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 11,
+                        code: 'PREG202411070285',
+                        text: '3139.- ¿Cuál es el propósito de una barra de parada (stop bar) en una calle de rodaje cerca de una pista?',
+                        options: {
+                            A: 'Servir como guía para el alineamiento nocturno.',
+                            B: 'Indicar el límite de espera antes de ingresar a una pista activa.',
+                            C: 'Delimitar el área de estacionamiento de aeronaves.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 12,
+                        code: 'PREG202411070286',
+                        text: '3143.- (Refiérase a la Figura 65). ¿Qué letrero indica que está en la calle de rodaje "Alfa"?',
+                        options: {
+                            A: 'El letrero "A".',
+                            B: 'El letrero "E".',
+                            C: 'El letrero "F".'
+                        },
+                        correct: 'A',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 13,
+                        code: 'PREG202411070287',
+                        text: '3144.- (Refiérase a la Figura 65). ¿Qué letrero indica la pista hacia la cual se dirige la calle de rodaje?',
+                        options: {
+                            A: 'El letrero "A".',
+                            B: 'El letrero "F".',
+                            C: 'El letrero "E".'
+                        },
+                        correct: 'B',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 14,
+                        code: 'PREG202411070288',
+                        text: '3773.- Dos líneas continuas amarillas y dos líneas discontinuas amarillas pintadas transversalmente en una calle de rodaje indican:',
+                        options: {
+                            A: 'El punto de espera de la pista.',
+                            B: 'El eje de la calle de rodaje.',
+                            C: 'Un área de parada de emergencia.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 15,
+                        code: 'PREG202411070289',
+                        text: '3774.- Un letrero con letras blancas sobre fondo rojo es un letrero de:',
+                        options: {
+                            A: 'Dirección.',
+                            B: 'Localización.',
+                            C: 'Instrucción obligatoria.'
+                        },
+                        correct: 'C',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 16,
+                        code: 'PREG202411070290',
+                        text: '3775.- (Refiérase a la Figura 65). El letrero "D" representa un letrero de:',
+                        options: {
+                            A: 'Instrucción obligatoria de punto de espera de pista.',
+                            B: 'Dirección de calle de rodaje.',
+                            C: 'Localización de pista.'
+                        },
+                        correct: 'A',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 17,
+                        code: 'PREG202411070291',
+                        text: '3776.- (Refiérase a la Figura 65). ¿Qué letrero indica que el rodaje más allá de ese punto está prohibido sin autorización del ATC?',
+                        options: {
+                            A: 'El letrero "A".',
+                            B: 'El letrero "B".',
+                            C: 'El letrero "D".'
+                        },
+                        correct: 'C',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 18,
+                        code: 'PREG202411070292',
+                        text: '3777.- (Refiérase a la Figura 65). El letrero "F" es un ejemplo de:',
+                        options: {
+                            A: 'Un letrero de localización de calle de rodaje.',
+                            B: 'Un letrero de destino de pista/calle de rodaje.',
+                            C: 'Un letrero de instrucción obligatoria.'
+                        },
+                        correct: 'B',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 19,
+                        code: 'PREG202411070293',
+                        text: '3778.- Al rodar en una calle de rodaje, las luces de eje de calle de rodaje son de color:',
+                        options: {
+                            A: 'Azul continuo.',
+                            B: 'Verde continuo.',
+                            C: 'Blanco intermitente.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 20,
+                        code: 'PREG202411070294',
+                        text: '3813.- ¿Qué color de luces define los bordes de una pista?',
+                        options: {
+                            A: 'Blanco.',
+                            B: 'Verde.',
+                            C: 'Azul.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 21,
+                        code: 'PREG202411070295',
+                        text: '3814.- Las luces de umbral de pista que indican el final de la pista para una aeronave que aterriza son de color:',
+                        options: {
+                            A: 'Verde.',
+                            B: 'Blanco.',
+                            C: 'Rojo.'
+                        },
+                        correct: 'C',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 22,
+                        code: 'PREG202411070296',
+                        text: '3815.- Una luz intermitente blanca y verde en un helipuerto o aeropuerto de noche indica:',
+                        options: {
+                            A: 'Un aeropuerto civil iluminado en tierra.',
+                            B: 'Un helipuerto civil iluminado.',
+                            C: 'Un helipuerto militar iluminado.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 23,
+                        code: 'PREG202411070297',
+                        text: '3816.- Un faro de aeropuerto civil emite destellos de color:',
+                        options: {
+                            A: 'Verde y blanco alternados.',
+                            B: 'Verde, amarillo y blanco alternados.',
+                            C: 'Dos destellos blancos rápidos seguidos de un destello verde.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 24,
+                        code: 'PREG202411070298',
+                        text: '3817.- Un faro de aeropuerto militar emite destellos de color:',
+                        options: {
+                            A: 'Verde y blanco alternados.',
+                            B: 'Dos destellos blancos rápidos seguidos de un destello verde.',
+                            C: 'Verde solo.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 25,
+                        code: 'PREG202411070299',
+                        text: '3818.- Las luces de obstrucción de peligro en tierra o estructuras altas son normalmente de color:',
+                        options: {
+                            A: 'Rojo fijo o rojo intermitente.',
+                            B: 'Blanco intermitente de alta intensidad.',
+                            C: 'Azul fijo.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 26,
+                        code: 'PREG202411070300',
+                        text: '3820.- Un sistema indicador de pendiente de aproximación visual de dos barras (VASI) proporciona guía visual de pendiente de planeo. Si ambas barras se observan rojas, la aeronave está:',
+                        options: {
+                            A: 'Por encima de la trayectoria de planeo.',
+                            B: 'Por debajo de la trayectoria de planeo.',
+                            C: 'En la trayectoria de planeo adecuada.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 27,
+                        code: 'PREG202411070301',
+                        text: '3821.- (Refiérase a la Figura 48). Un sistema VASI de tres barras proporciona guía para qué tipo de aeronaves?',
+                        options: {
+                            A: 'Aeronaves de gran tamaño o de cabina alta.',
+                            B: 'Todo tipo de aviones ligeros monomotores.',
+                            C: 'Helicópteros únicamente.'
+                        },
+                        correct: 'A',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 28,
+                        code: 'PREG202411070302',
+                        text: '3823.- En una aproximación con un sistema indicador de trayectoria de aproximación de precisión (PAPI), si observa tres luces rojas y una blanca, la aeronave está:',
+                        options: {
+                            A: 'Ligeramente por encima de la trayectoria de planeo.',
+                            B: 'Ligeramente por debajo de la trayectoria de planeo.',
+                            C: 'Muy por debajo de la trayectoria de planeo.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 29,
+                        code: 'PREG202411070303',
+                        text: '3162.- Durante el rodaje con viento de cola por la derecha, los controles de alerones y elevador deben mantenerse:',
+                        options: {
+                            A: 'Alerón derecho hacia arriba y elevador abajo.',
+                            B: 'Alerón derecho hacia abajo y elevador arriba.',
+                            C: 'Alerón derecho hacia abajo y elevador abajo.'
+                        },
+                        correct: 'C',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 30,
+                        code: 'PREG202411070304',
+                        text: '3163.- Durante el rodaje con viento de frente por la izquierda, los controles de alerones deben mantenerse:',
+                        options: {
+                            A: 'Alerón izquierdo hacia arriba y elevador arriba o neutral.',
+                            B: 'Alerón izquierdo hacia abajo y elevador abajo.',
+                            C: 'Alerón izquierdo hacia abajo y elevador arriba.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 31,
+                        code: 'PREG202411070305',
+                        text: '3164.- (Refiérase a la Figura 49). ¿Qué ilustración representa la posición correcta de los controles para rodar con viento de cola por la izquierda?',
+                        options: {
+                            A: 'Ilustración 1.',
+                            B: 'Ilustración 2.',
+                            C: 'Ilustración 3.'
+                        },
+                        correct: 'C',
+                        hasAnexo: true
+                    },
+                    {
+                        id: 32,
+                        code: 'PREG202411070355',
+                        text: '3712.- Las luces de navegación reglamentarias de una aeronave consisten en:',
+                        options: {
+                            A: 'Luz roja en el ala izquierdo, luz verde en el ala derecha y luz blanca en la cola.',
+                            B: 'Luz verde en el ala izquierda, luz roja en el ala derecha y luz blanca en la cola.',
+                            C: 'Luces blancas intermitentes en ambas puntas de ala y luz roja en la cola.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 33,
+                        code: 'PREG202411070356',
+                        text: '3713.- Una aeronave que vuela de noche debe mostrar luces de posición encendidas desde:',
+                        options: {
+                            A: 'El ocaso hasta la salida del sol (puesta a salida del sol).',
+                            B: 'Una hora después del ocaso hasta una hora antes de la salida del sol.',
+                            C: 'El comienzo del crepúsculo civil vespertino hasta el final del crepúsculo civil matutino.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 34,
+                        code: 'PREG202411070357',
+                        text: '3714.- La AAC recomienda a los pilotos encender sus luces de aterrizaje cuando operan por debajo de 10,000 pies, de día o de noche, y especialmente cuando operan:',
+                        options: {
+                            A: 'En el espacio aéreo de Clase B.',
+                            B: 'En condiciones de visibilidad reducida o dentro de las 10 millas de cualquier aeropuerto.',
+                            C: 'A más de 15 millas de un aeropuerto con torres.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 35,
+                        code: 'PREG202411070358',
+                        text: '3715.- Durante un vuelo nocturno, observa una luz roja fija y una luz roja intermitente adelante y a la misma altitud. ¿Cuál es la dirección general de movimiento de la otra aeronave?',
+                        options: {
+                            A: 'El otro avión cruza de derecha a izquierda (cruza a la izquierda).',
+                            B: 'El otro avión cruza de izquierda a derecha (cruza a la derecha).',
+                            C: 'El otro avión se acerca de frente.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 36,
+                        code: 'PREG202411070359',
+                        text: '3716.- Durante un vuelo nocturno, observa una luz blanca fija y una luz roja intermitente adelante y a la misma altitud. ¿Cuál es la dirección general de movimiento de la otra aeronave?',
+                        options: {
+                            A: 'El otro avión se aleja de ti.',
+                            B: 'El otro avión cruza a la izquierda.',
+                            C: 'El otro avión se aproxima de frente.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 37,
+                        code: 'PREG202411070360',
+                        text: '3717.- Durante un vuelo nocturno, observa una luz verde fija adelante y a la misma altitud. ¿Cuál es la dirección general de movimiento de la otra aeronave?',
+                        options: {
+                            A: 'El otro avión se aleja de ti.',
+                            B: 'El otro avión cruza de izquierda a derecha.',
+                            C: 'El otro avión cruza de derecha a izquierda.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 38,
+                        code: 'PREG202411070361',
+                        text: '3718.- Si dos aeronaves convergen de noche a la misma altitud, ¿cuál tiene el derecho de paso si observa la luz verde de la otra?',
+                        options: {
+                            A: 'Tu aeronave, porque la otra aeronave está a tu izquierda y debes ver su luz roja.',
+                            B: 'La otra aeronave, porque está a tu derecha.',
+                            C: 'Ambas tienen la misma prioridad y deben desviarse a la derecha.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 39,
+                        code: 'PREG202411070362',
+                        text: '3719.- Al realizar un vuelo nocturno, para evitar la desorientación visual, el piloto debe confiar principalmente en:',
+                        options: {
+                            A: 'Las referencias visuales del terreno iluminado.',
+                            B: 'Los instrumentos de vuelo correspondientes.',
+                            C: 'La visión periférica nocturna.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 40,
+                        code: 'PREG202411070363',
+                        text: '3721.- Una ilusión óptica común durante una aproximación nocturna a una pista bien iluminada rodeada de terreno oscuro es la sensación de estar:',
+                        options: {
+                            A: 'Más bajo de lo que realmente está, lo que lleva a una aproximación alta.',
+                            B: 'A la distancia incorrecta respecto al umbral.',
+                            C: 'Más alto de lo que realmente está, lo que lleva a una aproximación baja.'
+                        },
+                        correct: 'C',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 41,
+                        code: 'PREG202411070364',
+                        text: '3722.- La adaptación completa de los ojos a la oscuridad (visión nocturna) requiere aproximadamente cuántos minutos en un ambiente oscuro?',
+                        options: {
+                            A: '10 a 15 minutos.',
+                            B: '30 minutos.',
+                            C: '5 minutos.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 42,
+                        code: 'PREG202411070365',
+                        text: '3965.- Al planificar un vuelo nocturno VFR, es una buena práctica operativa llevar:',
+                        options: {
+                            A: 'Al menos una linterna confiable con luz blanca/roja y baterías de repuesto.',
+                            B: 'Un sistema GPS secundario portátil.',
+                            C: 'Gafas con filtros de color verde.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 43,
+                        code: 'PREG202411070366',
+                        text: '3965.1.- El uso de luces estroboscópicas de alta intensidad durante las operaciones en tierra de noche puede:',
+                        options: {
+                            A: 'Mejorar notablemente el control de los giros.',
+                            B: 'Encandilar o cegar temporalmente a otros pilotos o al personal de tierra.',
+                            C: 'Aumentar la eficiencia del alternador del motor.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 44,
+                        code: 'PREG202411070367',
+                        text: '3965.2.- Durante un vuelo nocturno VFR, ¿cuál es la altitud mínima recomendada sobre áreas residenciales o pobladas?',
+                        options: {
+                            A: '500 pies sobre la estructura más alta.',
+                            B: '1,000 pies MSL.',
+                            C: '2,000 pies sobre el obstáculo más alto dentro de un radio de 5 millas.'
+                        },
+                        correct: 'C',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 45,
+                        code: 'PREG202411070368',
+                        text: '3965.3.- Para mantener la visión nocturna, el piloto debe evitar mirar directamente a luces blancas intensas y utilizar iluminación de cabina de color:',
+                        options: {
+                            A: 'Rojo suave.',
+                            B: 'Azul brillante.',
+                            C: 'Verde fosforescente.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 46,
+                        code: 'PREG202411070369',
+                        text: '3965.4.- En caso de experimentar parpadeo o luces intermitentes continuas a través de la hélice durante el vuelo nocturno, el piloto puede sufrir de:',
+                        options: {
+                            A: 'Desorientación espacial severa.',
+                            B: 'Vértigo por parpadeo (flicker vertigo).',
+                            C: 'Miopía nocturna transitoria.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 47,
+                        code: 'PREG202411070370',
+                        text: '3651.1.- ¿Qué tipo de marcas de pista identifican un área que solo puede usarse para rodaje o como pista de parada de emergencia (overrun)?',
+                        options: {
+                            A: 'Galones amarillos (chevrons).',
+                            B: 'Líneas blancas discontinuas.',
+                            C: 'Flechas blancas continuas.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 48,
+                        code: 'PREG202411070371',
+                        text: '3651.2.- Una serie de flechas amarillas pintadas a lo largo del eje de la pista antes del umbral indican un:',
+                        options: {
+                            A: 'Umbral cerrado permanentemente.',
+                            B: 'Umbral desplazado (displaced threshold).',
+                            C: 'Área de parada de emergencia o zona de parada.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 49,
+                        code: 'PREG202411070372',
+                        text: '3651.3.- Un área de la pista marcada con galones amarillos (chevrons) significa que el área es:',
+                        options: {
+                            A: 'Apta para despegues únicamente.',
+                            B: 'Apta para rodaje y aterrizajes.',
+                            C: 'Inadecuada para el movimiento normal de aeronaves (solo parada de emergencia).'
+                        },
+                        correct: 'C',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 50,
+                        code: 'PREG202411070373',
+                        text: '3714.1.- Las luces de borde de calle de rodaje emiten una luz continua de color:',
+                        options: {
+                            A: 'Azul.',
+                            B: 'Verde.',
+                            C: 'Blanco.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 51,
+                        code: 'PREG202411070374',
+                        text: '3714.2.- El sistema indicador de trayectoria de aproximación de precisión (PAPI) consiste en una sola fila de luces. Si observa dos luces blancas y dos rojas, significa que se encuentra:',
+                        options: {
+                            A: 'En la trayectoria de planeo correcta.',
+                            B: 'Ligeramente por encima de la trayectoria de planeo.',
+                            C: 'Ligeramente por debajo de la trayectoria de planeo.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 52,
+                        code: 'PREG202411070375',
+                        text: '3714.3.- En un sistema VASI de dos barras, si la barra delantera se observa blanca y la trasera roja, la aeronave se encuentra:',
+                        options: {
+                            A: 'Por debajo de la trayectoria de planeo.',
+                            B: 'En la trayectoria de planeo correcta.',
+                            C: 'Por encima de la trayectoria de planeo.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 53,
+                        code: 'PREG202411070376',
+                        text: '3714.4.- Al aterrizar en una pista con un umbral desplazado (displaced threshold), la porción de pista anterior al umbral puede usarse para:',
+                        options: {
+                            A: 'Rodaje únicamente.',
+                            B: 'Aterrizajes y despegues.',
+                            C: 'Rodaje, despegue y carrera de parada de un aterrizaje en dirección opuesta.'
+                        },
+                        correct: 'C',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 54,
+                        code: 'PREG202411070377',
+                        text: '3714.5.- ¿Cuál es el propósito del sistema de luces de identificación de fin de pista (REIL)?',
+                        options: {
+                            A: 'Proporcionar una identificación rápida y positiva del umbral de la pista en condiciones de baja visibilidad.',
+                            B: 'Indicar la distancia restante de la pista.',
+                            C: 'Delimitar el inicio de la zona de parada de emergencia.'
+                        },
+                        correct: 'A',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 55,
+                        code: 'PREG202411070378',
+                        text: '3714.6.- Una baliza o manga de viento en un aeropuerto sirve principalmente para proporcionar información visual sobre:',
+                        options: {
+                            A: 'La presión barométrica local.',
+                            B: 'La dirección y velocidad estimada del viento en la superficie.',
+                            C: 'La presencia de cizalladura de bajo nivel.'
+                        },
+                        correct: 'B',
+                        hasAnexo: false
+                    },
+                    {
+                        id: 56,
+                        code: 'PREG202411070379',
+                        text: '3714.7.- Al operar de noche en las cercanías de un aeropuerto, el avistamiento de un faro terrestre con destellos verde y blanco alternados identifica un:',
+                        options: {
+                            A: 'Aeropuerto terrestre civil iluminado.',
+                            B: 'Aeropuerto militar iluminado.',
+                            C: 'Helipuerto civil iluminado.'
                         },
                         correct: 'A',
                         hasAnexo: false
